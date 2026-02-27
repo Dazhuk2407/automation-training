@@ -61,3 +61,4 @@ def get_discount_price(original_price, discount_percent):
     # Напишіть код тут
     pass
 
+
