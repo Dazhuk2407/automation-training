@@ -244,7 +244,7 @@ mypy your_file.py
 
 # Конфігурація .mypy.ini
 [mypy]
-python_version = 3.9
+python_version = 3.12
 warn_return_any = True
 warn_unused_configs = True
 disallow_untyped_defs = True

@@ -1,14 +1,12 @@
-# Документація Проекту
+# Документація Проєкту
 
-Добро пожалувати до **Automation Training** - комплексного курсу по вивченню автоматизації тестування на Python!
+Ласкаво просимо до **Automation Training** - комплексного курсу по вивченню автоматизації тестування на Python!
 
 ## 📑 Зміст документації
 
 1. **[GETTING_STARTED.md](GETTING_STARTED.md)** - Швидкий старт для новачків
-2. **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Опис структури проекту
-3. **[HOW_TO_LEARN.md](HOW_TO_LEARN.md)** - Рекомендації для навчання
-4. **[CONTRIBUTING.md](CONTRIBUTING.md)** - Як розширювати проект
-5. **[LESSON_TEMPLATE.md](LESSON_TEMPLATE.md)** - Шаблон для створення нових уроків
+2. **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Опис структури проєкт
+3. **[LESSON_TEMPLATE.md](LESSON_TEMPLATE.md)** - Шаблон для створення нових уроків
 
 ## 🚀 Швидкий Старт
 
@@ -28,7 +26,7 @@ python examples/variables.py
 # 5. Виконайте вправи
 pytest exercises/test_exercise.py -v
 
-# 6. Проверьте себя
+# 6. Перевір себе
 cat QUESTIONS.md
 ```
 
@@ -116,37 +114,12 @@ src/
     └── block-2-git-advanced/     (➕ Можна додати)
 ```
 
-## 🔗 Швидкі Посилання
-
-- 📖 [Getting Started](GETTING_STARTED.md) - Першi кроки
-- 🏗️ [Project Structure](PROJECT_STRUCTURE.md) - Детальна структура
-- 📚 [How to Learn](HOW_TO_LEARN.md) - Рекомендації
-- 🤝 [Contributing](CONTRIBUTING.md) - Як допомогти проекту
-- ✨ [Lesson Template](LESSON_TEMPLATE.md) - Шаблон для нових уроків
-
 ## ❓ Часті Питання
-
 **Q: З чого почати?**
 A: Почніть з `src/python/block-1-python-basic/lesson-1/`
 
 **Q: Як запустити приклади?**
 A: `python examples/variables.py`
-
-**Q: Як запустити тести?**
-A: `pytest exercises/test_exercise.py -v`
-
-**Q: Як додати новий урок?**
-A: Див. [LESSON_TEMPLATE.md](LESSON_TEMPLATE.md)
-
-**Q: Як додати новий блок?**
-A: Див. [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## 📞 Контакти та Підтримка
-
-- 🐛 [Знайдені помилки?](../CONTRIBUTING.md)
-- 💡 [Пропозиції для покращення](../CONTRIBUTING.md)
-- 📧 [Звяжіться з нами](../README.md)
-
 ---
 
 **Успіхів в навчанні!** 🚀

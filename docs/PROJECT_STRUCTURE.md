@@ -1,6 +1,6 @@
-# Project Structure - Структура Проекту
+# Project Structure - Структура Проєкту
 
-Детальний опис організації проекту та як він працює.
+Детальний опис організації проєкту та як він працює.
 
 ## 📊 Загальна Структура
 
@@ -10,23 +10,20 @@ automation-training/
 │   ├── python/            # Категорія: Python
 │   ├── pytest/            # Категорія: Pytest
 │   ├── playwright/        # Категорія: Playwright
-│   └── git/               # Категорія: Git
+│   ├── git/               # Категорія: Git
+│   └── linux/             # Категорія: Linux
 │
-├── docs/                  # Документація проекту
+├── docs/                  # Документація проєкту
 │   ├── README.md          # Головна сторінка docs
 │   ├── GETTING_STARTED.md # Швидкий старт
-│   ├── PROJECT_STRUCTURE.md # (цей файл)
-│   ├── HOW_TO_LEARN.md    # Рекомендації для навчання
-│   ├── CONTRIBUTING.md    # Як розширювати проект
-│   └── LESSON_TEMPLATE.md # Шаблон для нових уроків
+│   └── PROJECT_STRUCTURE.md # (цей файл)
 │
-├── README.md              # Головна сторінка проекту
+├── README.md              # Головна сторінка проєкту
 ├── CONTRIBUTING.md        # Правила внеску
 ├── requirements.txt       # Python залежності
 ├── conftest.py           # Конфігурація Pytest
 ├── pytest.ini            # Налаштування Pytest
-├── .gitignore            # Git ignore rules
-└── 5-schedule/           # Графік занять (від старої версії)
+└── .gitignore            # Git ignore rules
 ```
 
 ## 🎓 Категорії (src/)
@@ -37,29 +34,42 @@ automation-training/
 
 ```
 src/python/
-└── block-1-python-basic/        ✅ Готовий блок
-    ├── README.md                # Опис блоку та 8 уроків
-    ├── lesson-1/                # ✅ Lesson 1: Змінні та типи даних
+└── block-1-python-basic/        ✅ Готовий блок (12 уроків)
+    ├── README.md                # Опис блоку та всіх уроків
+    ├── lesson-1-install-python/         # ✅ Встановлення Python
     │   ├── README.md
     │   ├── QUESTIONS.md
     │   ├── examples/
-    │   │   └── variables.py
+    │   │   ├── README.md
+    │   │   └── hello_world.py
     │   └── exercises/
-    │       ├── exercise-1.py
-    │       └── test_exercise.py
-    ├── lesson-2/                # ➕ Можна додати
-    └── ... lesson-8/            # ➕ Можна додати
+    │       └── README.md
+    ├── lesson-2-setup-ide/              # ✅ Налаштування IDE
+    ├── lesson-3-running-code/           # ✅ Запуск Python коду
+    ├── lesson-4-virtual-environment/    # ✅ Віртуальне оточення
+    ├── lesson-5-pip-packages/           # ✅ Робота з pip
+    ├── lesson-6-requirements/           # ✅ requirements.txt
+    ├── lesson-7-basic-syntax/           # ✅ Базовий синтаксис
+    ├── lesson-8-pep8-style/             # ✅ PEP 8 та форматування
+    ├── lesson-9-debugging/              # ✅ Відлагодження коду
+    ├── lesson-10-data-types/            # ✅ Типи даних
+    ├── lesson-11-builtin-functions/     # ✅ Вбудовані функції
+    └── lesson-12-python-typing/         # ✅ Python Typing
 ```
 
-**Структура урока:** Lesson 1-8 покривають:
-- Lesson 1: Змінні та типи даних
-- Lesson 2: Оператори та умовні конструкції
-- Lesson 3: Цикли
-- Lesson 4: Функції
-- Lesson 5: ООП
-- Lesson 6: Структури даних
-- Lesson 7: Обробка помилок
-- Lesson 8: Модулі та пакети
+**Структура блоку:** 12 уроків покривають:
+- Lesson 1: Встановлення Python та перевірка
+- Lesson 2: Налаштування IDE (PyCharm/VS Code)
+- Lesson 3: Запуск Python коду з терміналу та IDE
+- Lesson 4: Створення та використання віртуального оточення
+- Lesson 5: Встановлення пакетів через pip
+- Lesson 6: Робота з requirements.txt
+- Lesson 7: Базовий синтаксис Python
+- Lesson 8: PEP 8 стиль та форматування коду
+- Lesson 9: Основи відлагодження (debugging)
+- Lesson 10: Типи даних та конвертація
+- Lesson 11: Вбудовані функції Python
+- Lesson 12: Typing та анотація типів
 
 ---
 
@@ -69,28 +79,31 @@ src/python/
 
 ```
 src/pytest/
-└── block-1-pytest-basic/       ✅ Готовий блок
-    ├── README.md
-    ├── lesson-1/               # ✅ Lesson 1: Основи Pytest
+└── block-1-pytest-basics/       ✅ Готовий блок (8 уроків)
+    ├── README.md                # Опис блоку
+    ├── lesson-1-install-pytest/         # ✅ Встановлення Pytest
     │   ├── README.md
     │   ├── QUESTIONS.md
     │   ├── examples/
-    │   │   └── test_math.py
     │   └── exercises/
-    │       └── test_exercises.py
-    ├── lesson-2/               # ➕ Можна додати
-    └── ... lesson-8/           # ➕ Можна додати
+    ├── lesson-2-project-structure/      # ✅ Структура проєкту
+    ├── lesson-3-first-test/             # ✅ Перший тест
+    ├── lesson-4-test-discovery/         # ✅ Test Discovery
+    ├── lesson-5-simple-tests/           # ✅ Прості тести
+    ├── lesson-6-assertions/             # ✅ Assertions
+    ├── lesson-7-run-tests/              # ✅ Запуск тестів
+    └── lesson-8-test-output/            # ✅ Аналіз результатів
 ```
 
-**Структура урока:** Lesson 1-8 покривають:
-- Lesson 1: Основи Pytest
-- Lesson 2: Фікстури
-- Lesson 3: Параметризація
-- Lesson 4: Маркери
-- Lesson 5: Плагіни
-- Lesson 6: Моки та патчінг
-- Lesson 7: Організація тестів
-- Lesson 8: Інтеграційне тестування
+**Структура блоку:** 8 уроків покривають:
+- Lesson 1: Встановлення Pytest
+- Lesson 2: Структура тестового проєкту
+- Lesson 3: Створення першого тесту
+- Lesson 4: Правила Test Discovery
+- Lesson 5: Написання простих тестів
+- Lesson 6: Основи assertions
+- Lesson 7: Запуск тестів з CLI
+- Lesson 8: Читання та розуміння test output
 
 ---
 
@@ -100,27 +113,23 @@ src/pytest/
 
 ```
 src/playwright/
-└── block-1-playwright-basic/   ✅ Готовий блок
+└── block-1-playwright-basic/   ⚠️  В розробці
     ├── README.md
-    ├── lesson-1/               # ✅ Lesson 1: Основи Playwright
-    │   ├── README.md
-    │   ├── QUESTIONS.md
-    │   ├── examples/
-    │   │   └── basic_example.py
-    │   └── exercises/
-    │       └── test_exercises.py
-    ├── lesson-2/               # ➕ Можна додати
-    └── ... lesson-8/           # ➕ Можна додати
+    └── lesson-1/               # ⚠️  Базова структура
+        ├── README.md
+        ├── QUESTIONS.md
+        ├── examples/
+        └── exercises/
 ```
 
-**Структура урока:** Lesson 1-8 покривають:
-- Lesson 1: Основи Playwright
-- Lesson 2: Селектори
-- Lesson 3: Взаємодія з елементами
-- Lesson 4: Синхронізація та очікування
-- Lesson 5: Фрейми та вікна
+**Заплановано:** 8 уроків покриватимуть:
+- Lesson 1: Встановлення Playwright
+- Lesson 2: Перший тест
+- Lesson 3: Селектори
+- Lesson 4: Взаємодія з елементами
+- Lesson 5: Синхронізація та очікування
 - Lesson 6: Скріншоти та запис
-- Lesson 7: API та Network
+- Lesson 7: API тестування
 - Lesson 8: Page Object Model
 
 ---
@@ -131,26 +140,47 @@ src/playwright/
 
 ```
 src/git/
-└── block-1-git-basic/          ✅ Готовий блок
+└── block-1-git-basic/          ⚠️  В розробці
     ├── README.md
-    ├── lesson-1/               # ✅ Lesson 1: Основи Git
-    │   ├── README.md
-    │   ├── QUESTIONS.md
-    │   └── exercises/
-    │       └── EXERCISES.md
-    ├── lesson-2/               # ➕ Можна додати
-    └── ... lesson-8/           # ➕ Можна додати
+    └── lesson-1/               # ⚠️  Базова структура
+        ├── README.md
+        ├── QUESTIONS.md
+        └── exercises/
+            └── EXERCISES.md
 ```
 
-**Структура урока:** Lesson 1-8 покривають:
-- Lesson 1: Основи Git
-- Lesson 2: Гілки
-- Lesson 3: Merging та конфлікти
-- Lesson 4: Remote repositories
-- Lesson 5: Collaborative workflow
-- Lesson 6: Advanced Git
-- Lesson 7: Git workflows
-- Lesson 8: Best practices
+**Заплановано:** 10 уроків покриватимуть:
+- Lesson 1: Встановлення Git
+- Lesson 2: Конфігурація Git user
+- Lesson 3: Ініціалізація репозиторію
+- Lesson 4: Структура репозиторію
+- Lesson 5: Working directory vs staging vs repository
+- Lesson 6: git status
+- Lesson 7: git add
+- Lesson 8: git commit
+- Lesson 9: git log
+- Lesson 10: git diff
+
+---
+
+### 🐧 Linux (src/linux/)
+
+Основи роботи з командним рядком Linux/Unix.
+
+```
+src/linux/
+└── block-1-linux-basic/        ⚠️  В розробці
+    ├── README.md
+    └── lesson-1/               # ⚠️  Базова структура
+        ├── README.md
+        ├── QUESTIONS.md
+        ├── examples/
+        │   └── commands.sh
+        └── exercises/
+            └── EXERCISES.md
+```
+
+**Заплановано:** Уроки покриватимуть основні команди Linux та навігацію файловою системою.
 
 ---
 
@@ -159,17 +189,20 @@ src/git/
 Кожен урок слідує одній і тій же структурі для консистентності:
 
 ```
-lesson-X/
-├── README.md           # 📖 Теорія та матеріалу
+lesson-X-topic-name/
+├── README.md           # 📖 Теорія та матеріали
 ├── QUESTIONS.md        # ❓ Питання для самоперевірки
 ├── examples/           # 💡 Приклади коду
-│   ├── example1.py
-│   ├── example2.py
+│   ├── README.md       # Пояснення та інструкції
+│   ├── example-1.py
+│   ├── example-2.py
 │   └── ...
 └── exercises/          # 🏋️ Вправи та тести
+    ├── README.md       # Інструкції до вправ
+    ├── EXERCISES.md    # Опис завдань
     ├── exercise-1.py
     ├── exercise-2.py
-    ├── test_exercise.py
+    ├── test_exercises.py
     └── ...
 ```
 
@@ -191,127 +224,40 @@ lesson-X/
 
 ### 💡 examples/
 
-Содержит готові коди, которые можна запустити:
+Містить готові коди, які можна запустити:
+- **README.md** - Інструкції як запускати приклади
 - **Синтаксис** - Показує як писати код
 - **Best practices** - Правильні способи роботи
 - **Результати** - Що очікувати при запуску
-- **Комментарії** - Пояснення до кода
+- **Коментарі** - Пояснення до коду
 
 **Як використовувати:**
 ```bash
-python examples/variables.py
+# Python приклади
+python3 examples/example-1.py
+
+# Pytest приклади
 pytest examples/test_math.py -v
 ```
 
 ### 🏋️ exercises/
 
 Містить вправи для практики:
+- **README.md** - Інструкції до виконання вправ
+- **EXERCISES.md** - Детальний опис завдань
 - **Неповні функції** - Потрібно заповнити код (pass)
 - **Тестові файли** - Автоматичні тести для перевірки
-- **Різні рівні** - От простих до складних завдань
+- **Різні рівні** - Від простих до складних завдань
 - **Помилки** - Кожна помилка має бути розпізнана
 
 **Як використовувати:**
 ```bash
 # Прочитати вправу
-cat exercises/exercise-1.py
+cat exercises/EXERCISES.md
 
 # Написати рішення (відкрити в редакторі)
 code exercises/exercise-1.py
 
 # Запустити тести
-pytest exercises/test_exercise.py -v
+pytest exercises/test_exercises.py -v
 ```
-
----
-
-## 🔄 Процес Навчання
-
-```
-1. Вибрати категорію
-   ↓
-2. Вибрати блок
-   ↓
-3. Вибрати урок (lesson-1, lesson-2, ...)
-   ↓
-4. Прочитати README.md (теорія)
-   ↓
-5. Запустити приклади (examples/)
-   ↓
-6. Виконати вправи (exercises/)
-   ↓
-7. Запустити тести (pytest)
-   ↓
-8. Відповісти на питання (QUESTIONS.md)
-   ↓
-9. Перейти до наступного уроку
-```
-
----
-
-## 📈 Як Проект Розширюється
-
-### Додавання нового уроку (Lesson 2-8)
-
-```bash
-# 1. Скопіювати структуру lesson-1
-cp -r src/python/block-1-python-basic/lesson-1/ \
-      src/python/block-1-python-basic/lesson-2/
-
-# 2. Оновити матеріал в README.md, QUESTIONS.md
-# 3. Додати нові приклади в examples/
-# 4. Додати нові вправи в exercises/
-```
-
-### Додавання нового блоку
-
-```bash
-# 1. Створити нову папку блоку
-mkdir src/python/block-2-python-advanced/
-
-# 2. Скопіювати структуру з block-1
-cp -r src/python/block-1-python-basic/lesson-1/ \
-      src/python/block-2-python-advanced/lesson-1/
-
-# 3. Написати новий README.md для блоку
-# 4. Оновити матеріал для другого рівня складності
-```
-
-### Додавання нової категорії
-
-```bash
-# 1. Створити нову папку категорії
-mkdir src/new-category/
-
-# 2. Створити нові блоки всередину
-mkdir src/new-category/block-1-new-basic/
-
-# 3. Додати lesson-1 з повним матеріалом
-```
-
----
-
-## 🎯 Структура Повинна Бути Зрозумілою
-
-- ✅ **Послідовна** - Один блок → Один урок → Один файл
-- ✅ **Модульна** - Легко додавати нові блоки та уроки
-- ✅ **Масштабована** - Сотні уроків в сотнях блоків
-- ✅ **Логічна** - Легко знайти те, що потрібно
-- ✅ **Консистентна** - Всі уроки слідують одному формату
-
----
-
-## 📋 Контрольний Список при Створенні Нового Уроку
-
-- [ ] Папка `lesson-X/` створена
-- [ ] `README.md` написаний з теорією
-- [ ] `QUESTIONS.md` написаний з питаннями
-- [ ] `examples/` папка з 2-3 прикладами
-- [ ] `exercises/` папка з вправами та тестами
-- [ ] Тести проходять ✅
-- [ ] Виконаний контрольний список з файлу
-
----
-
-**Структура готова для розширення!** 🚀
-

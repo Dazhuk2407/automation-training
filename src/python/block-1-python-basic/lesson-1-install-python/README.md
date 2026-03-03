@@ -7,9 +7,11 @@
 ## План
 
 ### 1.1 Install Python
-- Встановлення Python 3.9+
+- Встановлення Python 3.12+
 - Перевірка версії через термінал
-- macOS: Homebrew, Windows: python.org
+- macOS: Homebrew
+- Windows: python.org (обов'язково оберіть "Add Python to PATH")
+- Linux: apt (Ubuntu/Debian)
 
 ### Встановлення Python
 
@@ -29,6 +31,7 @@ python3 --version
 
 - **Linux (Ubuntu/Debian):**
   ```bash
+  sudo apt update
   sudo apt-get install python3
   ```
 

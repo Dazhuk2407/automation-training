@@ -49,7 +49,7 @@ def test_conftest_special_file():
     assert True
 
 
-# Запустіть з кореня проекту:
+# Запустіть з кореня проєкту:
 # pytest -v                    # знайде всі тести
 # pytest tests/                # тести тільки в tests/
 # pytest tests/test_unit/      # тести тільки в test_unit/
