@@ -54,7 +54,7 @@ print(f"a={a}, b={b}")
 
 # === ПРАВИЛА НАЗВУВАННЯ ===
 valid_name = "OK"           # ✅ lowercase_with_underscores
-_private_var = "OK"         # ✅ приватна змінна
+_private_var = "OK"         # ✅ внутрішня змінна за convention
 CONSTANT_VALUE = 100        # ✅ константа UPPERCASE
 counter = 0                 # ✅ описане ім'я
 

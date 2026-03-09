@@ -154,7 +154,7 @@ code README.md
 
 ```bash
 # Python
-python examples/variables.py
+python examples/example_2_variables.py
 
 # Pytest
 pytest examples/test_math.py -v

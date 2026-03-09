@@ -5,7 +5,7 @@
 ## 📑 Зміст документації
 
 1. **[GETTING_STARTED.md](GETTING_STARTED.md)** - Швидкий старт для новачків
-2. **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Опис структури проєкт
+2. **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Опис структури проєкту
 3. **[LESSON_TEMPLATE.md](LESSON_TEMPLATE.md)** - Шаблон для створення нових уроків
 
 ## 🚀 Швидкий Старт
@@ -21,10 +21,10 @@ cd src/python/block-1-python-basic/lesson-1/
 cat README.md
 
 # 4. Вивчіть приклади
-python examples/variables.py
+python python examples/example_2_variables.py
 
 # 5. Виконайте вправи
-pytest exercises/test_exercise.py -v
+pytest exercises/test_exercises.py -v
 
 # 6. Перевір себе
 cat QUESTIONS.md
@@ -79,7 +79,7 @@ lesson-X/
 ## 🎯 Як Використовувати Курс
 
 1. **Виберіть категорію** (Python, Pytest, Playwright, Git)
-2. **Виберіть блок** (block-1-basic, block-2-advanced тощо)
+2. **Виберіть блок** (block-1-python-basic, block-2-python-advanced тощо)
 3. **Виберіть урок** (lesson-1, lesson-2 тощо)
 4. **Дотримуйтесь процесу:**
    - Прочитайте `README.md`

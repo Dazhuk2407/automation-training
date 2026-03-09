@@ -63,7 +63,7 @@ print("\n" + "=" * 50)
 print("OPERATOR PRECEDENCE")
 print("=" * 50)
 
-# Порядок операцій: **, *, /, //, %, +, -
+# Приклад пріоритету операторів
 result = 2 + 3 * 4
 print(f"2 + 3 * 4 = {result}  (3*4 first, then +2)")
 

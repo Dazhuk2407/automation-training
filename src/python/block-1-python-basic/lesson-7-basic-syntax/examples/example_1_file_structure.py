@@ -35,7 +35,7 @@ class Person:
         self.age = age
 
     def __repr__(self) -> str:
-        """Повертає рядкове представлення об'єкта для debugging."""
+        """Повертає рядкове представлення об'єкта для налагодження (debugging)."""
         return f"Person(name='{self.name}', age={self.age})"
 
 
