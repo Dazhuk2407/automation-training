@@ -13,12 +13,12 @@ class TestExercise1Naming:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-1-fix-naming.py"
-        assert file_path.exists(), "exercise-1-fix-naming.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_1_fix_naming.py"
+        assert file_path.exists(), "exercise_1_fix_naming.py не знайдено"
 
     def test_function_naming(self):
         """Функції мають бути в snake_case"""
-        file_path = Path(__file__).parent / "exercise-1-fix-naming.py"
+        file_path = Path(__file__).parent / "exercise_1_fix_naming.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -28,12 +28,13 @@ class TestExercise1Naming:
 
     def test_class_naming(self):
         """Класи мають бути в PascalCase"""
-        file_path = Path(__file__).parent / "exercise-1-fix-naming.py"
+        file_path = Path(__file__).parent / "exercise_1_fix_naming.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
         # Перевірка що немає snake_case класів
         assert 'class user_profile' not in content, "Клас має бути UserProfile"
+        assert 'class UserProfile' in content, "Клас має бути UserProfile"
 
 
 class TestExercise2Spacing:
@@ -41,23 +42,28 @@ class TestExercise2Spacing:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-2-fix-spacing.py"
-        assert file_path.exists(), "exercise-2-fix-spacing.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_2_fix_spacing.py"
+        assert file_path.exists(), "exercise_2_fix_spacing.py не знайдено"
 
     def test_operator_spacing(self):
         """Навколо операторів мають бути пробіли"""
-        file_path = Path(__file__).parent / "exercise-2-fix-spacing.py"
+        file_path = Path(__file__).parent / "exercise_2_fix_spacing.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
         # Перевірка що немає операторів без пробілів
-        bad_patterns = ['x+y', 'x*y', 'x=y', 'x-y']
+        bad_patterns = [
+            'result=x+y*z',
+            'total=sum(items)*multiplier+offset',
+            "data={'name':'John'",
+            'items,multiplier=2,offset=0'
+        ]
         for pattern in bad_patterns:
             assert pattern not in content, f"Знайдено {pattern} без пробілів"
 
     def test_file_syntax(self):
         """Файл має бути синтаксично правильним"""
-        file_path = Path(__file__).parent / "exercise-2-fix-spacing.py"
+        file_path = Path(__file__).parent / "exercise_2_fix_spacing.py"
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 ast.parse(f.read())
@@ -70,12 +76,12 @@ class TestExercise3Imports:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-3-fix-imports.py"
-        assert file_path.exists(), "exercise-3-fix-imports.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_3_fix_imports.py"
+        assert file_path.exists(), "exercise_3_fix_imports.py не знайдено"
 
     def test_imports_order(self):
         """Імпорти мають бути впорядковані"""
-        file_path = Path(__file__).parent / "exercise-3-fix-imports.py"
+        file_path = Path(__file__).parent / "exercise_3_fix_imports.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
@@ -93,12 +99,12 @@ class TestExercise4Docstrings:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-4-add-docstrings.py"
-        assert file_path.exists(), "exercise-4-add-docstrings.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_4_add_docstrings.py"
+        assert file_path.exists(), "exercise_4_add_docstrings.py не знайдено"
 
     def test_has_docstrings(self):
         """Функції та класи мають мати docstrings"""
-        file_path = Path(__file__).parent / "exercise-4-add-docstrings.py"
+        file_path = Path(__file__).parent / "exercise_4_add_docstrings.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -108,7 +114,7 @@ class TestExercise4Docstrings:
 
     def test_docstring_format(self):
         """Docstrings мають мати Args та Returns"""
-        file_path = Path(__file__).parent / "exercise-4-add-docstrings.py"
+        file_path = Path(__file__).parent / "exercise_4_add_docstrings.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -122,8 +128,8 @@ class TestExercise5Black:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-5-format-with-black.py"
-        assert file_path.exists(), "exercise-5-format-with-black.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_5_format_with_black.py"
+        assert file_path.exists(), "exercise_5_format_with_black.py не знайдено"
 
 
 class TestExercise6Flake8:
@@ -131,12 +137,12 @@ class TestExercise6Flake8:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-6-fix-flake8-errors.py"
-        assert file_path.exists(), "exercise-6-fix-flake8-errors.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_6_fix_flake8_errors.py"
+        assert file_path.exists(), "exercise_6_fix_flake8_errors.py не знайдено"
 
     def test_no_unused_variables(self):
         """Не має бути невикористаних змінних"""
-        file_path = Path(__file__).parent / "exercise-6-fix-flake8-errors.py"
+        file_path = Path(__file__).parent / "exercise_6_fix_flake8_errors.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -146,7 +152,7 @@ class TestExercise6Flake8:
 
     def test_proper_blank_lines(self):
         """Між функціями мають бути 2 порожні рядки"""
-        file_path = Path(__file__).parent / "exercise-6-fix-flake8-errors.py"
+        file_path = Path(__file__).parent / "exercise_6_fix_flake8_errors.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -159,12 +165,12 @@ class TestExercise7Refactor:
 
     def test_file_exists(self):
         """Файл має існувати"""
-        file_path = Path(__file__).parent / "exercise-7-refactor-code.py"
-        assert file_path.exists(), "exercise-7-refactor-code.py не знайдено"
+        file_path = Path(__file__).parent / "exercise_7_refactor_code.py"
+        assert file_path.exists(), "exercise_7_refactor_code.py не знайдено"
 
     def test_function_naming_snake_case(self):
         """Функції мають бути в snake_case"""
-        file_path = Path(__file__).parent / "exercise-7-refactor-code.py"
+        file_path = Path(__file__).parent / "exercise_7_refactor_code.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -174,7 +180,7 @@ class TestExercise7Refactor:
 
     def test_class_naming_pascal_case(self):
         """Класи мають бути в PascalCase"""
-        file_path = Path(__file__).parent / "exercise-7-refactor-code.py"
+        file_path = Path(__file__).parent / "exercise_7_refactor_code.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -183,7 +189,7 @@ class TestExercise7Refactor:
 
     def test_has_docstrings(self):
         """Модуль, функції та класи мають мати docstrings"""
-        file_path = Path(__file__).parent / "exercise-7-refactor-code.py"
+        file_path = Path(__file__).parent / "exercise_7_refactor_code.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 

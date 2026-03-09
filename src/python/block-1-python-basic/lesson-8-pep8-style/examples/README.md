@@ -1,4 +1,19 @@
-# Приклади - Lesson 8: PEP 8
+# Приклади — Lesson 8: PEP 8 and Code Formatting
+
+У цій папці знаходяться приклади до Lesson 8.
+
+## Файли
+- `example_1_pep8_basic.py` — базові правила PEP 8: назви, пробіли, відступи
+- `example_2_formatting_tools.py` — приклади форматування коду за допомогою `black`
+- `example_3_linting.py` — приклади помилок, які знаходять `flake8` та `pylint`
+
+## Як запускати
+Запустіть будь-який приклад командою:
+
+```bash
+python example_1_pep8_basic.py
+python example_2_formatting_tools.py
+python example_3_linting.py
 
 ## Правильний код (PEP 8 compliant)
 
@@ -52,19 +67,19 @@ if __name__ == "__main__":
 ## Неправильний код (порушення PEP 8)
 
 ```python
-# ❌ Відступи мешані
+# ❌ Відступи змішані
 def bad_function():
   x=1
    y=2  # Неправильний відступ
 	z=3  # Tab замість пробілів
 
 # ❌ Назвування
-def MyFunction():  # Клас, не функція
+def MyFunction():  # PascalCase замість snake_case
     MyVariable=10  # Має бути my_variable
-    CONSTANT_VALUE=20  # На масштабованої
+    CONSTANT_VALUE=20  # Немає пробілів навколо оператора =
 
-# ❌ Пробільність
+# ❌ Пробіли
 x=y+1  # Немає пробілів навколо операторів
-def func(a,b,c = 1):  # Невідповідна пробільність
+def func(a,b,c = 1):  # не коректно коли немає пробілів
     pass
 ```

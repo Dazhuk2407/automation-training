@@ -1,68 +1,16 @@
-# Вправи - Lesson 8: PEP 8
+# Вправи — Lesson 8: PEP 8 and Code Formatting
 
-## Завдання 1: Напишіть PEP 8 код
+У цій папці знаходяться практичні вправи до Lesson 8.
 
-Створіть файл, що слідує всім правилам PEP 8:
+## Файли
+- `EXERCISES.md` — опис усіх завдань
+- `test_exercises.py` — pytest тести для перевірки частини вправ
 
-```python
-"""
-Опис модуля.
-"""
-
-# Константи
-MAX_SIZE = 100
-
-# Функція
-def my_function(x, y):
-    """Опис функції."""
-    result = x + y
-    return result
-
-# Клас
-class MyClass:
-    """Опис класу."""
-    
-    def __init__(self):
-        self.value = 0
-
-# Головний код
-if __name__ == "__main__":
-    obj = MyClass()
-    print(my_function(5, 3))
-```
-
-## Завдання 2: Виправте код
-
-Візьміть неправильний код:
-
-```python
-def BadFunction(x,y,z = 1):
-    return x+y+z
-```
-
-Виправте на PEP 8:
-
-```python
-def bad_function(x, y, z=1):
-    return x + y + z
-```
-
-## Завдання 3: Встановіть інструменти
+## Як працювати
+1. Відкрийте `EXERCISES.md`
+2. Створіть потрібні `.py` файли
+3. Виконайте вправи
+4. За потреби запустіть перевірку:
 
 ```bash
-pip install black pycodestyle
-```
-
-## Завдання 4: Перевірте код
-
-```bash
-# Перевірити
-pycodestyle your_file.py
-
-# Автоматично форматувати
-black your_file.py
-```
-
----
-
-**✅ Коли код слідує PEP 8 - переходьте до Lesson 9**
+pytest test_exercises.py -v

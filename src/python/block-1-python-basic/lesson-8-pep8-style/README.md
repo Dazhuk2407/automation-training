@@ -1,10 +1,10 @@
 # Lesson 8: PEP 8 and Code Formatting
 
-## 🎯 Learning Outcomes
+## 🎯 Результати навчання
 
 - ✅ Розуміти правила PEP 8
 - ✅ Писати код в стилі PEP 8
-- ✅ Використовувати інструменти форматування (`black`, `pylint`, `flake8`)
+- ✅ Використовувати інструменти форматування (`black`, `isort`, `flake8`, `pylint`)
 - ✅ Автоматизувати перевірку стилю
 
 ---
@@ -13,7 +13,7 @@
 
 ### 1. Що таке PEP 8?
 
-PEP 8 (Python Enhancement Proposal 8) - офіційний посібник стилю для Python коду.
+PEP 8 (Python Enhancement Proposal 8) - офіційний посібник стилю для Python.
 
 ```python
 # ✅ ПРАВИЛЬНО - PEP 8 compliant
@@ -46,7 +46,7 @@ def function():
 ### 3. Довжина рядків
 
 ```python
-# ✅ Максимум 79 символів для кода
+# ✅ Максимум 79 символів для коду
 # Максимум 72 символи для коментарів
 def long_function_name(
     variable_one,
@@ -61,7 +61,7 @@ def long_function_name(variable_one, variable_two, variable_three):
     pass
 ```
 
-### 4. Пробільність навколо операторів
+### 4. Пробіли навколо операторів
 
 ```python
 # ✅ ПРАВИЛЬНО - пробіли навколо операторів
@@ -210,7 +210,7 @@ black .
 # Перевірка без змін
 black --check myfile.py
 
-# Форматування з довжиною рядка 88
+# Black використовує стандартну довжину рядка 88
 black --line-length 88 myfile.py
 ```
 
@@ -225,7 +225,42 @@ x = 1 + 2 * 3
 func(arg1, arg2, arg3)
 ```
 
-### 2. Flake8 - лінтер (перевіряє стиль)
+
+### 2. isort - сортування імпортів
+
+`isort` автоматично впорядковує імпорти відповідно до PEP 8.
+
+```bash
+# Встановлення
+pip install isort
+
+# Сортування імпортів у файлі
+isort myfile.py
+
+# Сортування імпортів у всьому проєкті
+isort .
+
+# Перевірка без змін
+isort --check-only .
+```
+
+**Результат:**
+```python
+# Before
+import pandas as pd
+import os
+from pathlib import Path
+import sys
+
+# After
+import os
+import sys
+from pathlib import Path
+
+import pandas as pd
+```
+
+### 3. Flake8 - лінтер (перевіряє стиль)
 
 ```bash
 # Встановлення
@@ -248,7 +283,7 @@ myfile.py:5:9: W293 blank line contains whitespace
 myfile.py:10:1: E303 too many blank lines (3)
 ```
 
-### 3. Pylint - детальна перевірка якості
+### 4. Pylint - детальна перевірка якості
 
 ```bash
 # Встановлення
@@ -257,7 +292,7 @@ pip install pylint
 # Перевірка файлу
 pylint myfile.py
 
-# Визначення оцінки качественности
+# Визначення оцінки якості
 pylint myfile.py --score=yes
 
 # Вивід у форматі JSON
@@ -266,7 +301,7 @@ pylint myfile.py --output-format=json
 
 **Результат:**
 ```
-Your code has been rated at 9.50/10
+Your code has been rated at 9.50/10 (оцінка якості коду)
 ```
 
 ---

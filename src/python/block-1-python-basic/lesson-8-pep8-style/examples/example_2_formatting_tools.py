@@ -128,7 +128,7 @@ if __name__ == "__main__":
     print("ЯК ВИКОРИСТОВУВАТИ BLACK:")
     print("=" * 70)
     print("1. Встановити: pip install black")
-    print("2. Форматувати файл: black example-2-formatting-tools.py")
-    print("3. Перевірити без змін: black --check example-2-formatting-tools.py")
+    print("2. Форматувати файл: black example_2_formatting_tools.py")
+    print("3. Перевірити без змін: black --check example_2_formatting_tools.py")
     print("4. Форматувати всю папку: black .")
 

@@ -96,13 +96,13 @@ if __name__ == "__main__":
     print("  W291: пробіл в кінці рядка")
 
     print("\n✅ Як перевірити:")
-    print("  flake8 example-3-linting.py")
-    print("  pylint example-3-linting.py")
+    print("  flake8 example_3_linting.py")
+    print("  pylint example_3_linting.py")
 
     print("\n✅ Як виправити:")
     print("  1. Вручну виправити помилки")
-    print("  2. Використати black: black example-3-linting.py")
-    print("  3. Використати autopep8: autopep8 --in-place example-3-linting.py")
+    print("  2. Використати black: black example_3_linting.py")
+    print("  3. Використати autopep8: autopep8 --in-place example_3_linting.py")
 
     # Демонстрація правильного коду
     print("\n" + "=" * 70)
@@ -119,6 +119,6 @@ if __name__ == "__main__":
     print("\n" + "=" * 70)
     print("РЕЙТИНГ ЯКОСТІ КОДУ")
     print("=" * 70)
-    print("Запустіть: pylint example-3-linting.py --score=yes")
+    print("Запустіть: pylint example_3_linting.py --score=yes")
     print("Очікуваний рейтинг: 5-7/10 (через навмисні помилки)")
 

@@ -2,7 +2,7 @@
 
 ## 🏋️ Завдання 1: Виправити назви змінних та функцій (EASY)
 
-Створіть файл `exercise-1-fix-naming.py`:
+Створіть файл `exercise_1_fix_naming.py`:
 
 ```python
 """
@@ -41,11 +41,11 @@ class user_profile:
 
 ## 🏋️ Завдання 2: Виправити пробіли навколо операторів (EASY)
 
-Створіть файл `exercise-2-fix-spacing.py`:
+Створіть файл `exercise_2_fix_spacing.py`:
 
 ```python
 """
-Вправа 2: Виправити пробільність
+Вправа 2: Виправити пробіли
 """
 
 # ❌ Неправильне форматування - виправте!
@@ -68,7 +68,7 @@ numbers=[1,2,3,4,5]
 
 **Перевірка:**
 ```bash
-python exercise-2-fix-spacing.py
+python exercise_2_fix_spacing.py
 # Має запуститися без синтаксичних помилок
 ```
 
@@ -76,7 +76,7 @@ python exercise-2-fix-spacing.py
 
 ## 🏋️ Завдання 3: Впорядкувати імпорти (MEDIUM)
 
-Створіть файл `exercise-3-fix-imports.py`:
+Створіть файл `exercise_3_fix_imports.py`:
 
 ```python
 """
@@ -92,7 +92,7 @@ from datetime import datetime
 import re
 
 # TODO: Впорядкувати за групами:
-# 1. Стандартна бібліотека (os, sys, json, re)
+# 1. Стандартна бібліотека (os, sys, json, re, datetime, pathlib)
 # 2. Сторонні пакети (якщо є)
 # 3. Локальні модулі
 
@@ -111,7 +111,7 @@ import re
 
 ## 🏋️ Завдання 4: Додати docstrings (MEDIUM)
 
-Створіть файл `exercise-4-add-docstrings.py`:
+Створіть файл `exercise_4_add_docstrings.py`:
 
 ```python
 """
@@ -159,14 +159,14 @@ Returns:
 
 ## 🏋️ Завдання 5: Форматування з black (MEDIUM)
 
-Створіть файл `exercise-5-format-with-black.py`:
+Створіть файл `exercise_5_format_with_black.py`:
 
 ```python
 """
 Вправа 5: Запустити black на цьому файлі
 """
 
-# ❌ Код до форматування
+# ❌ Код спеціально написаний без форматування — виправте його за допомогою black
 def ugly_function(param1,param2,param3,param4,param5,param6):
     if param1 and param2:result=param3+param4*param5-param6;return result
     else:return 0
@@ -177,27 +177,27 @@ def another_ugly_function(data,config={'type':'json','compress':True,'format':'u
 
 # TODO: 
 # 1. Встановити black: pip install black
-# 2. Запустити: black exercise-5-format-with-black.py
+# 2. Запустити: black exercise_5_format_with_black.py
 # 3. Порівняти код ДО та ПІСЛЯ
 ```
 
 **Команди:**
 ```bash
 # Перевірка без змін
-black --check exercise-5-format-with-black.py
+black --check exercise_5_format_with_black.py
 
 # Форматування
-black exercise-5-format-with-black.py
+black exercise_5_format_with_black.py
 
 # Перевірка після форматування
-black --check exercise-5-format-with-black.py
+black --check exercise_5_format_with_black.py
 ```
 
 ---
 
 ## 🏋️ Завдання 6: Виправити помилки flake8 (HARD)
 
-Створіть файл `exercise-6-fix-flake8-errors.py`:
+Створіть файл `exercise_6_fix_flake8_errors.py`:
 
 ```python
 """
@@ -223,9 +223,9 @@ class myClass:
 
 # TODO:
 # 1. Встановити flake8: pip install flake8
-# 2. Запустити: flake8 exercise-6-fix-flake8-errors.py
+# 2. Запустити: flake8 exercise_6_fix_flake8_errors.py
 # 3. Виправити ВСІ помилки
-# 4. Запустити знову: flake8 exercise-6-fix-flake8-errors.py
+# 4. Запустити знову: flake8 exercise_6_fix_flake8_errors.py
 # 5. Результат має бути: "All checks passed"
 ```
 
@@ -234,13 +234,13 @@ class myClass:
 - E303: забагато порожніх рядків
 - E225: без пробілів навколо операторів
 - E701: множинні інструкції на одному рядку
-- W0612: невикористана змінна
+- невикористана змінна
 
 ---
 
 ## 🏋️ Завдання 7: Повна переробка коду (HARD)
 
-Створіть файл `exercise-7-refactor-code.py`:
+Створіть файл `exercise_7_refactor_code.py`:
 
 ```python
 """
@@ -272,7 +272,7 @@ class user_manager:
         return Process(self.Users,'active','name')
 
 # TODO: Переписати дотримуючись УСІХ правил PEP 8:
-# ✅ Правильні назви (snake_case, PascalCase)
+# ✅ Правильні назви (функції та змінні — snake_case, класи — PascalCase)
 # ✅ Пробіли навколо операторів
 # ✅ Docstrings для модуля, функцій, класів
 # ✅ Порожні рядки (2 між функціями)
@@ -295,13 +295,13 @@ class user_manager:
 
 ```bash
 # Перевірка форматування
-black --check exercise-*.py
+black --check exercise_*.py
 
 # Перевірка стилю
-flake8 exercise-*.py
+flake8 exercise_*.py
 
 # Детальна перевірка
-pylint exercise-*.py --score=yes
+pylint exercise_*.py --score=yes
 ```
 
 ### Запуск тестів:
@@ -309,8 +309,3 @@ pylint exercise-*.py --score=yes
 ```bash
 pytest test_exercises.py -v
 ```
-
----
-
-**Готові до наступного уроку?** Якщо виконали 5+ вправ та всі тести проходять - так! 🚀
-
