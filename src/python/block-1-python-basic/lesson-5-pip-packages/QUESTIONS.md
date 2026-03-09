@@ -40,7 +40,3 @@
    ```bash
    pip uninstall requests
    ```
-
----
-
-**✅ Коли pip працює - переходьте до Lesson 6**

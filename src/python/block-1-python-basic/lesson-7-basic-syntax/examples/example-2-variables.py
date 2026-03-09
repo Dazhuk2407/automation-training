@@ -38,7 +38,7 @@ print(f"Height: {height}, Type: {type(height)}")
 print(f"Is Student: {is_student}, Type: {type(is_student)}")
 print(f"Result: {result}, Type: {type(result)}")
 
-# === МНОЖЕСТВЕННЕ ПРИСВОЮВАННЯ ===
+# === МНОЖИННЕ ПРИСВОЮВАННЯ ===
 x, y, z = 1, 2, 3
 print(f"\n=== Multiple Assignment ===")
 print(f"x={x}, y={y}, z={z}")

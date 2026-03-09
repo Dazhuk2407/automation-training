@@ -4,10 +4,14 @@
 
 Навчитися працювати з requirements.txt для керування залежностями.
 
+## 📚 Корисні посилання
+
+- [Офіційна документація pip requirements file format](https://pip.pypa.io/en/stable/reference/requirements-file-format/)
+
 ## План
 
 ### 1.6 Working with requirements.txt
-- Создание requirements.txt
+- Створення requirements.txt
 - pip freeze
 - pip install -r
 - Оновлення залежностей
@@ -26,7 +30,7 @@ pip freeze > requirements.txt
 pip install -r requirements.txt
 
 # З конкретної версії Python
-python3.9 -m pip install -r requirements.txt
+python3.12 -m pip install -r requirements.txt
 ```
 
 ## Ручна редакція

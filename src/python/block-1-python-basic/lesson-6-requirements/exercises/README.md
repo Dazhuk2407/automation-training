@@ -62,7 +62,3 @@ pandas
 ```bash
 pip install -r requirements.txt
 ```
-
----
-
-**✅ Коли requirements.txt працює правильно - переходьте до Lesson 7**

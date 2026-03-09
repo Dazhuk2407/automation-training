@@ -31,7 +31,7 @@ pip show requests
 # Name: requests
 # Version: 2.28.2
 # Summary: Python HTTP for Humans.
-# Location: /path/to/venv/lib/python3.12/site-packages
+# Location: /path/to/venv/lib/python3.9/site-packages
 ```
 
 ## Видалення

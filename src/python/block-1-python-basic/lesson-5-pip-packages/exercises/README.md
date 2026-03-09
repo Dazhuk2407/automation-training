@@ -17,7 +17,6 @@ python3 -m pip install --upgrade pip
 ```bash
 pip install requests
 pip install pytest
-pip install numpy
 ```
 
 ## Завдання 4: Перевірте встановлення
@@ -51,7 +50,3 @@ python3 test_requests.py
 ```bash
 pip uninstall requests -y
 ```
-
----
-
-**✅ Коли встановлення та видалення працює - переходьте до Lesson 6**

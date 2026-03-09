@@ -1,10 +1,10 @@
 """
-Pytest тести для перевірки вправ Lesson 7
-Запустіть: pytest exercises/test_exercises.py -v
+Pytest тести для перевірки вправ Lesson 7.
+Запуск з кореня проєкту:
+pytest exercises/test_exercises.py -v
 """
 
 import pytest
-import sys
 from pathlib import Path
 
 
@@ -38,6 +38,30 @@ class TestExercise1FileStructure:
         assert '__main__' in content, "Файл повинен мати if __name__ == '__main__'"
 
 
+class TestExercise2Comments:
+    """Тести для завдання 2 - коментарі та docstrings"""
+
+    def test_exercise_2_exists(self):
+        """Файл exercise_2_comments.py має існувати"""
+        file_path = Path(__file__).parent / "exercise_2_comments.py"
+        assert file_path.exists(), "exercise_2_comments.py не знайдено"
+
+    def test_exercise_2_has_module_docstring(self):
+        """Файл має мати docstring модуля"""
+        file_path = Path(__file__).parent / "exercise_2_comments.py"
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        assert '"""' in content or "'''" in content, "Файл повинен мати docstring модуля"
+
+    def test_exercise_2_has_function_docstring(self):
+        """Функція має мати docstring з Args та Returns"""
+        file_path = Path(__file__).parent / "exercise_2_comments.py"
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        assert "Args:" in content, "Функція повинна мати секцію Args"
+        assert "Returns:" in content, "Функція повинна мати секцію Returns"
+
+
 class TestExercise3Variables:
     """Тести для завдання 3 - змінні всіх типів"""
 
@@ -55,15 +79,19 @@ class TestExercise3Variables:
         # Перевіримо що є присвоювання для різних типів
         has_string = '"' in content or "'" in content
         has_int = any(c.isdigit() for c in content)
+        has_float = any(token in content for token in ['0.0', '1.0', '2.5', '3.14'])
         has_bool = 'True' in content or 'False' in content
+        has_none = 'None' in content
 
         assert has_string, "Повинна бути змінна типу str"
         assert has_int, "Повинна бути змінна типу int"
+        assert has_float, "Повинна бути змінна типу float"
         assert has_bool, "Повинна бути змінна типу bool"
+        assert has_none, "Повинна бути змінна типу None"
 
 
 class TestExercise4MultipleAssignment:
-    """Тести для завдання 4 - множественне присвоювання"""
+    """Тести для завдання 4 - множинне присвоювання"""
 
     def test_exercise_4_exists(self):
         """Файл exercise_4_multiple_assignment.py має існувати"""
@@ -71,11 +99,16 @@ class TestExercise4MultipleAssignment:
         assert file_path.exists(), "exercise_4_multiple_assignment.py не знайдено"
 
     def test_exercise_4_has_multiple_assignment(self):
-        """Файл має мати множественне присвоювання"""
+        """Файл має мати множинне присвоювання"""
         file_path = Path(__file__).parent / "exercise_4_multiple_assignment.py"
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        assert ',' in content and '=' in content, "Повинне бути множественне присвоювання"
+        has_multiple_assignment = (
+                'x, y, z =' in content or
+                'a, b =' in content or
+                'x, y =' in content
+        )
+        assert has_multiple_assignment, "Повинне бути множинне присвоювання"
 
 
 class TestExercise5Operators:
@@ -96,9 +129,24 @@ class TestExercise5Operators:
         has_operators = sum(1 for op in operators if op in content) >= 3
         assert has_operators, "Повинні бути арифметичні операції"
 
+    def test_exercise_5_has_comparison_and_logical_operations(self):
+        """Файл повинен мати оператори порівняння та логічні оператори"""
+        file_path = Path(__file__).parent / "exercise_5_operators.py"
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        comparison_ops = ['==', '!=', '>', '<', '>=', '<=']
+        logical_ops = ['and', 'or', 'not']
+
+        has_comparison = any(op in content for op in comparison_ops)
+        has_logical = any(op in content for op in logical_ops)
+
+        assert has_comparison, "Повинні бути оператори порівняння"
+        assert has_logical, "Повинні бути логічні оператори"
+
 
 class TestExercise6SyntaxErrors:
-    """Тести для завдання 6 - виявлення помилок"""
+    """Тести для завдання 6 - виправлення синтаксичних помилок"""
 
     def test_exercise_6_exists(self):
         """Файл exercise_6_syntax_errors.py має існувати"""
@@ -111,7 +159,6 @@ class TestExercise6SyntaxErrors:
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 compile(f.read(), str(file_path), 'exec')
-            assert True
         except SyntaxError as e:
             pytest.fail(f"Файл має синтаксичні помилки: {e}")
 
