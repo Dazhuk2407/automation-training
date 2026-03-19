@@ -1,57 +1,21 @@
-# Приклади - Lesson 10: Debugging
+# Приклади — Lesson 9: Debugging
 
-## Код для дебагування
+У цій папці знаходяться приклади до Lesson 9.
 
-```python
-"""
-Приклад кода для практики дебагування.
-Поставте breakpoint на рядки з коментарями.
-"""
+## Файли
+- `example-1-print-debugging.py` — debugging за допомогою print(): знижки, пошук максимуму
+- `example-2-breakpoints.py` — практика breakpoints: BMI, валідація даних, обробка чисел
+- `example-3-finding-bugs.py` — 5 навмисних помилок для пошуку через debugger
 
-def calculate_sum(numbers):
-    """Обчислити суму списку."""
-    total = 0  # 🔴 Breakpoint тут
-    
-    for num in numbers:  # 🔴 Breakpoint тут
-        total += num
-    
-    return total
+## Як працювати
 
+1. Запустіть приклад звичайним способом:
+   ```bash
+   python example-1-print-debugging.py
+   ```
+2. Потім відкрийте у IDE та запустіть у Debug режимі (F5 / Shift+F9)
+3. Поставте breakpoints на рядки з позначкою 🔴
+4. Використовуйте Step Over (F10) та Step Into (F11)
 
-def process_data(data):
-    """Обробити дані."""
-    result = []
-    
-    for item in data:  # 🔴 Breakpoint тут
-        processed = item * 2
-        result.append(processed)
-    
-    return result
-
-
-def main():
-    """Головна функція."""
-    numbers = [1, 2, 3, 4, 5]
-    
-    # Поставте breakpoint тут
-    total = calculate_sum(numbers)  # 🔴 Breakpoint
-    
-    data = [10, 20, 30]
-    processed = process_data(data)
-    
-    print(f"Total: {total}")
-    print(f"Processed: {processed}")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-## Інструкції для дебагування
-
-1. Поставте breakpoint натиском на ліве поле
-2. Запустіть Debug mode
-3. Використайте:
-   - F10: Step Over
-   - F11: Step Into
-   - Shift+F11: Step Out
+## Порада
+`example-3-finding-bugs.py` спеціально містить помилки — не виправляйте їх одразу. Спершу знайдіть кожну через debugger, зрозумійте причину, і тільки потім виправляйте.

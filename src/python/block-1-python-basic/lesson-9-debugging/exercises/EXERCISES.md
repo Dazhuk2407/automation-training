@@ -2,12 +2,13 @@
 
 ## 🏋️ Завдання 1: Print Debugging - Знайти помилку (EASY)
 
-Створіть файл `exercise-1-print-debug.py`:
+Створіть файл `exercise_1_print_debug.py`:
 
 ```python
 """
 Вправа 1: Використайте print() для знаходження помилки
 """
+
 
 def calculate_rectangle_area(length, width):
     """Розрахувати площу прямокутника."""
@@ -15,12 +16,14 @@ def calculate_rectangle_area(length, width):
     area = length * width
     return area
 
+
 def calculate_rectangle_perimeter(length, width):
     """Розрахувати периметр прямокутника."""
     # ❌ Тут є помилка - знайдіть її!
     # TODO: Додайте print() для debug
     perimeter = length + width
     return perimeter
+
 
 # Тест
 length = 10
@@ -32,7 +35,7 @@ perimeter = calculate_rectangle_perimeter(length, width)
 print(f"Area: {area}")
 print(f"Perimeter: {perimeter}")  # Має бути 30, але буде неправильно!
 
-# TODO: 
+# TODO:
 # 1. Додайте print() для перевірки змінних
 # 2. Знайдіть помилку в calculate_rectangle_perimeter
 # 3. Виправте формулу (має бути 2 * (length + width))
@@ -48,12 +51,13 @@ Perimeter: 30
 
 ## 🏋️ Завдання 2: Breakpoints - Debug у циклі (EASY)
 
-Створіть файл `exercise-2-breakpoints.py`:
+Створіть файл `exercise_2_breakpoints.py`:
 
 ```python
 """
 Вправа 2: Використайте breakpoints для debug циклу
 """
+
 
 def find_first_negative(numbers):
     """Знайти перше від'ємне число."""
@@ -63,6 +67,7 @@ def find_first_negative(numbers):
         if num < 0:
             return i, num
     return None, None
+
 
 # Тест
 numbers = [5, 10, 15, -3, 20, -7]
@@ -81,12 +86,13 @@ print(f"First negative: {value} at index {index}")
 
 ## 🏋️ Завдання 3: Виправити помилку з типами (MEDIUM)
 
-Створіть файл `exercise-3-fix-type-error.py`:
+Створіть файл `exercise_3_fix_type_error.py`:
 
 ```python
 """
 Вправа 3: Знайти та виправити помилку з типами даних
 """
+
 
 def calculate_total(items):
     """Розрахувати загальну вартість."""
@@ -95,6 +101,7 @@ def calculate_total(items):
         # ❌ Тут виникає помилка!
         total += item['price']
     return total
+
 
 # Тест
 items = [
@@ -121,28 +128,30 @@ except TypeError as e:
 
 ---
 
-## 🏋️ Завдання 4: Debug з умовами (MEDIUM)
+## 🏋️ Завдання 4: Debug з умовами — off-by-one (MEDIUM)
 
-Створіть файл `exercise-4-debug-conditions.py`:
+Створіть файл `exercise_4_debug_conditions.py`:
 
 ```python
 """
-Вправа 4: Debug логіки з умовами
+Вправа 4: Debug логіки з умовами (off-by-one error)
 """
+
 
 def categorize_age(age):
     """Визначити категорію віку."""
-    # ❌ Тут є логічна помилка!
+    # ❌ Тут є логічна помилка на межі значень!
     if age < 0:
         return "Invalid"
     elif age < 13:
         return "Child"
     elif age < 18:
         return "Teenager"
-    elif age < 65:
+    elif age <= 65:
         return "Adult"
-    elif age >= 65:
+    else:
         return "Senior"
+
 
 # Тести
 test_ages = [5, 12, 13, 17, 18, 30, 64, 65, 80, -5]
@@ -153,9 +162,10 @@ for age in test_ages:
 
 # TODO:
 # 1. Поставте breakpoint у функції categorize_age
-# 2. Перевірте кожну умову
-# 3. Знайдіть помилку (вік 65 не обробляється правильно)
-# 4. Виправте умову
+# 2. Запустіть з age=65 та age=64
+# 3. Простежте яка гілка if/elif спрацьовує
+# 4. Знайдіть: age=65 потрапляє в "Adult", а має бути "Senior"
+# 5. Виправте умову (має бути age < 65, а не age <= 65)
 
 # Очікуваний результат:
 # Age   5 → Child
@@ -174,17 +184,20 @@ for age in test_ages:
 
 ## 🏋️ Завдання 5: Debug складної функції (HARD)
 
-Створіть файл `exercise-5-complex-debug.py`:
+Створіть файл `exercise_5_complex_debug.py`:
 
 ```python
 """
 Вправа 5: Debug складної функції з кількома помилками
 """
 
+
 def process_student_grades(students):
     """
     Обробити оцінки студентів та повернути статистику.
-    
+
+    Якщо у студента відсутня оцінка — вважаємо що він не склав (grade=0).
+
     ❌ У цій функції 3 помилки!
     """
     results = {
@@ -193,43 +206,41 @@ def process_student_grades(students):
         'passing': [],
         'failing': []
     }
-    
+
     total_grade = 0
-    
+
     for student in students:
         results['total_students'] += 1
-        
-        # ❌ BUG 1: Що якщо 'grade' немає?
+
+        # ❌ BUG 1: KeyError якщо 'grade' відсутній
         grade = student['grade']
         total_grade += grade
-        
-        # ❌ BUG 2: Неправильна умова
-        if grade > 60:  # Має бути >= 60
+
+        # ❌ BUG 2: grade=60 має бути passing, але потрапляє в failing
+        if grade > 60:
             results['passing'].append(student['name'])
         else:
             results['failing'].append(student['name'])
-    
-    # ❌ BUG 3: Що якщо студентів немає?
+
+    # ❌ BUG 3: ZeroDivisionError якщо список порожній
     results['average_grade'] = total_grade / results['total_students']
-    
+
     return results
+
 
 # Тест
 students = [
     {'name': 'Alice', 'grade': 85},
     {'name': 'Bob', 'grade': 60},    # Має бути passing!
     {'name': 'Charlie', 'grade': 45},
-    {'name': 'Diana'},                # Немає grade!
+    {'name': 'Diana'},                # Немає grade — вважаємо 0
 ]
 
 # TODO:
-# 1. Запустіть і отримайте помилки
-# 2. Використайте breakpoints
-# 3. Знайдіть всі 3 помилки
-# 4. Виправте:
-#    - BUG 1: student.get('grade', 0)
-#    - BUG 2: grade >= 60
-#    - BUG 3: Перевірка перед діленням
+# 1. Запустіть і отримайте KeyError на Diana
+# 2. Виправте BUG 1: student.get('grade', 0) замість student['grade']
+# 3. Запустіть знову — Bob потрапляє в failing. Виправте BUG 2: >= 60
+# 4. Протестуйте з порожнім списком. Виправте BUG 3: перевірка перед діленням
 
 try:
     stats = process_student_grades(students)
@@ -243,32 +254,85 @@ except Exception as e:
 
 ---
 
-## 🏋️ Завдання 6: Створити власний buggy код (HARD)
+## 🏋️ Завдання 6: Debug функції обробки замовлень (HARD)
 
-Створіть файл `exercise-6-create-buggy-code.py`:
+Створіть файл `exercise_6_debug_orders.py`:
 
 ```python
 """
-Вправа 6: Створіть код з 3 помилками для колеги
+Вправа 6: Знайдіть та виправте 3 помилки у функції обробки замовлень
+
+Функція має:
+- Порахувати загальну вартість (price * quantity)
+- Застосувати знижку якщо total > 100
+- Повернути підсумок
 """
 
-# TODO: Напишіть функцію з 3 навмисними помилками:
-# 1. Помилка з типами (TypeError)
-# 2. Помилка з ключами (KeyError)
-# 3. Логічна помилка
 
-def your_buggy_function():
+def process_order(order_items, discount_percent=10):
     """
-    Ваша функція з помилками.
-    
-    Приклад: Функція для обробки замовлень
+    Обробити замовлення та повернути підсумок.
+
+    Args:
+        order_items: список товарів [{'name': ..., 'price': ..., 'quantity': ...}]
+        discount_percent: знижка у відсотках (за замовчуванням 10%)
+
+    Returns:
+        dict з 'items_count', 'subtotal', 'discount', 'total'
     """
-    pass  # TODO: Реалізуйте
+    subtotal = 0
 
-# TODO: Додайте тести які викличуть помилки
-# TODO: Додайте коментарі де поставити breakpoints
+    for item in order_items:
+        # ❌ BUG 1: що якщо quantity відсутній?
+        cost = item['price'] * item['quantity']
+        subtotal += cost
 
-# Обмінюйтесь кодом з колегою та знайдіть помилки один одного!
+    # ❌ BUG 2: знижка рахується неправильно
+    if subtotal > 100:
+        discount = subtotal * discount_percent
+    else:
+        discount = 0
+
+    # ❌ BUG 3: total має бути subtotal - discount, не навпаки
+    total = discount - subtotal
+
+    return {
+        'items_count': len(order_items),
+        'subtotal': subtotal,
+        'discount': round(discount, 2),
+        'total': round(total, 2)
+    }
+
+
+# Тест
+order = [
+    {'name': 'Book', 'price': 25, 'quantity': 2},
+    {'name': 'Pen', 'price': 5},            # Немає quantity!
+    {'name': 'Notebook', 'price': 15, 'quantity': 3},
+]
+
+# TODO:
+# 1. Запустіть — отримаєте KeyError на Pen
+#    FIX: item.get('quantity', 1)
+# 2. Після виправлення — discount буде 950 замість 9.5
+#    FIX: discount_percent / 100
+# 3. Після виправлення — total буде від'ємним
+#    FIX: subtotal - discount
+
+try:
+    result = process_order(order)
+    print(f"Items: {result['items_count']}")
+    print(f"Subtotal: ${result['subtotal']}")
+    print(f"Discount: ${result['discount']}")
+    print(f"Total: ${result['total']}")
+except Exception as e:
+    print(f"❌ Error: {type(e).__name__}: {e}")
+
+# Очікуваний результат після виправлення:
+# Items: 3
+# Subtotal: $100
+# Discount: $0
+# Total: $100.0
 ```
 
 ---
@@ -278,12 +342,7 @@ def your_buggy_function():
 ### Автоматична перевірка:
 
 ```bash
-# Запустити всі вправи
-python exercise-1-print-debug.py
-python exercise-2-breakpoints.py
-python exercise-3-fix-type-error.py
-python exercise-4-debug-conditions.py
-python exercise-5-complex-debug.py
+pytest test_exercises.py -v
 ```
 
 ### Критерії:
@@ -293,6 +352,3 @@ python exercise-5-complex-debug.py
 - [ ] Зрозуміло ЯК та ЧОМУ виникли помилки
 
 ---
-
-**Готові до Lesson 10?** Якщо виправили 4+ вправи - так! 🚀
-

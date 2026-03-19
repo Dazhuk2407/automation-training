@@ -115,8 +115,9 @@ ages: Dict[str, int] = {
     "Bob": 30
 }
 
-# Складніший словник
-user: Dict[str, any] = {
+# Словник з різними типами значень
+from typing import Any
+user: Dict[str, Any] = {
     "name": "Alice",
     "age": 25,
     "is_active": True
@@ -214,6 +215,8 @@ config: Dict[str, Any] = {
 }
 ```
 
+**⚠️ Обережно з `Any`:** Він вимикає перевірку типів для цього значення. mypy не знайде помилок. Використовуйте `Any` тільки коли реально не знаєте тип заздалегідь (наприклад, JSON config). Якщо тип відомий — краще `Union` або конкретний тип.
+
 ---
 
 ### 8. Callable - Функція як параметр
@@ -277,28 +280,32 @@ add("hello", "world")  # error: Argument 1 has incompatible type "str"; expected
 
 ---
 
+### 11. Сучасний синтаксис (Python 3.10+)
+
+Починаючи з Python 3.10, можна писати простіше — без імпорту з `typing`:
+
+```python
+# Python 3.9+: вбудовані типи з маленької літери
+def get_names() -> list[str]:    # замість List[str]
+    return ["Alice", "Bob"]
+
+ages: dict[str, int] = {}        # замість Dict[str, int]
+
+# Python 3.10+: оператор | замість Union та Optional
+def square(n: int | float) -> int | float:   # замість Union[int, float]
+    return n ** 2
+
+name: str | None = None           # замість Optional[str]
+```
+
+**У цьому курсі** ми використовуємо класичний синтаксис через `typing` — він працює в усіх версіях Python 3.5+.
+
+---
+
 ## 💡 Приклади
 
 Див. папку `examples/`
 
 ## 🏋️ Вправи
-
-Див. папку `exercises/`
-
-## Optional типи
-
-```python
-from typing import Optional
-
-# Значення може бути str або None
-result: Optional[str] = None
-result = "Hello"
-```
-
-## Приклади
-
-Див. папку `examples/`
-
-## Вправи
 
 Див. папку `exercises/`

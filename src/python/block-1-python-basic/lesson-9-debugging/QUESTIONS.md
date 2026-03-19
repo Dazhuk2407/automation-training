@@ -1,42 +1,63 @@
-# Питання для самоперевірки - Lesson 10: Debugging
+# Питання для самоперевірки - Lesson 9: Debugging
 
-## 🎯 Дебагування
+## 🧠 Debugging Mindset
 
-1. **Breakpoints**
-   - Як поставити breakpoint?
-   - Як видалити breakpoint?
+1. **Підхід до пошуку помилок**
+   - Ви отримали `TypeError`. Які перші 3 речі ви зробите?
+   - Як систематично звужувати місце помилки у великій функції?
+   - Чому варто читати traceback знизу вверх?
 
-2. **Step Execution**
-   - Різниця між Step Over та Step Into?
-   - Коли використовувати кожен?
+2. **Print vs Breakpoints**
+   - Коли print() краще за breakpoints?
+   - Коли breakpoints краще за print()?
+   - Чому print debugging не масштабується?
 
-3. **Variable Inspection**
-   - Як переглянути змінну під час дебагування?
-   - Як побачити тип змінної?
+3. **Типові категорії помилок**
+   - Різниця між SyntaxError, TypeError, ValueError, KeyError?
+   - Що таке off-by-one error? Наведіть приклад.
+   - Чому логічні помилки найскладніші для пошуку?
 
-4. **Call Stack**
+## 🔧 Інструменти IDE
+
+4. **Breakpoints**
+   - Як поставити/видалити breakpoint?
+   - Чи можна поставити conditional breakpoint? Коли це корисно?
+
+5. **Step Execution**
+   - Різниця між Step Over (F10) та Step Into (F11)?
+   - Коли використовувати Step Out (Shift+F11)?
+
+6. **Variable Inspection**
+   - Як переглянути значення змінної під час паузи?
+   - Що таке Watch Expression і навіщо це потрібно?
+
+7. **Call Stack**
    - Що показує call stack?
-   - Як його використовувати?
-
-5. **Watch Expressions**
-   - Для чого вони потрібні?
-   - Як додати вираз для спостереження?
+   - Як зрозуміти з call stack, звідки була викликана поточна функція?
 
 ## ✅ Практичні завдання
 
-6. **Запустіть дебагер:**
-   - Поставте breakpoint на першу строку функції
-   - Запустіть Debug mode (F5 або меню)
-   - Переглянути змінні
+8. **Прочитайте traceback:**
+   ```
+   Traceback (most recent call last):
+     File "app.py", line 15, in process_data
+       result = data['key']
+   KeyError: 'key'
+   ```
+   - В якому файлі помилка? На якому рядку?
+   - Який тип помилки? Що вона означає?
+   - Як би ви це виправили?
 
-7. **Step Through Code:**
-   - Використайте Step Over (F10)
-   - Використайте Step Into (F11)
-   - Спостерігайте змінення змінних
-
-8. **Вивчіть Call Stack:**
-   - Бачите порядок викликів функцій
+9. **Знайдіть баг поглядом** (без запуску):
+   ```python
+   def average(numbers):
+       total = 0
+       for n in numbers:
+           total += n
+       return total / len(numbers)
+   ```
+   - Для якого вхідного значення ця функція впаде?
 
 ---
 
-**✅ Коли дебагер працює - переходьте до Lesson 11**
+**✅ Готові до Lesson 10?** Якщо відповідаєте на більшість запитань — так!
