@@ -73,7 +73,7 @@ def bad_function():
    y=2  # Неправильний відступ
 	z=3  # Tab замість пробілів
 
-# ❌ Назвування
+# ❌ Назви
 def MyFunction():  # PascalCase замість snake_case
     MyVariable=10  # Має бути my_variable
     CONSTANT_VALUE=20  # Немає пробілів навколо оператора =

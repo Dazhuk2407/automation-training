@@ -1,133 +1,129 @@
-# Lesson 1: Install Pytest
+# Lesson 1: Встановлення Pytest
 
 ## 🎯 Learning Outcomes
 
-- ✅ Встановити pytest через pip
-- ✅ Перевірити версію pytest
-- ✅ Налаштувати віртуальне середовище для pytest
-- ✅ Зрозуміти базову структуру pytest проєкту
+Після цього уроку ви зможете:
+
+- ✅ Встановити pytest у віртуальне середовище
+- ✅ Перевірити що pytest працює
+- ✅ Зафіксувати залежності в `requirements.txt`
+- ✅ Відтворити середовище з нуля
+
+---
+
+## 📋 Передумови
+
+Перед початком переконайтесь що у вас є:
+
+- Python 3.8+
+- Активоване віртуальне середовище (venv)
+
+Якщо ні — див. Python курс: `block-1-python-basic/lesson-4-virtual-environment`.
 
 ---
 
 ## 📖 Теорія
 
-### 1. Що таке Pytest?
+### 1. Встановлення pytest
 
-**Pytest** - це фреймворк для тестування Python коду. Це один з найпопулярніших інструментів для написання та запуску тестів.
+```bash
+python -m pip install pytest
+```
 
-**Переваги pytest:**
-- ✅ Простий синтаксис
-- ✅ Потужні assertions
-- ✅ Автоматичне виявлення тестів
-- ✅ Багато плагінів
-- ✅ Детальний вивід помилок
+**Чому `python -m pip`, а не просто `pip`?**
+
+`python -m pip` гарантує, що пакет встановиться саме в те середовище, де працює ваш Python. Якщо використовувати просто `pip`, він може вказувати на інший Python (глобальний, системний), і ви отримаєте `ModuleNotFoundError` при спробі запустити pytest.
 
 ---
 
-### 2. Встановлення Pytest
-
-#### Крок 1: Переконайтеся що Python встановлений
+### 2. Перевірка встановлення
 
 ```bash
-python --version
-# або
-python3 --version
-```
-
-Потрібна версія Python 3.8+
-
-#### Крок 2: Створіть віртуальне середовище (рекомендовано)
-
-```bash
-# Створити venv
-python -m venv venv
-
-# Активувати
-# На macOS/Linux:
-source venv/bin/activate
-
-# На Windows:
-venv\Scripts\activate
-```
-
-#### Крок 3: Встановіть pytest
-
-```bash
-pip install pytest
-```
-
-#### Крок 4: Перевірте встановлення
-
-```bash
-pytest --version
-```
-
-**Очікуваний результат:**
-```
-pytest 7.4.3
-```
-
----
-
-### 3. Альтернативні способи встановлення
-
-#### Встановити конкретну версію:
-
-```bash
-pip install pytest==7.4.3
-```
-
-#### Встановити з requirements.txt:
-
-```bash
-# requirements.txt
-pytest==7.4.3
-pytest-cov==4.1.0
-
-# Встановити
-pip install -r requirements.txt
-```
-
-#### Оновити pytest:
-
-```bash
-pip install --upgrade pytest
-```
-
----
-
-### 4. Перевірка встановлення
-
-Після встановлення перевірте що pytest працює:
-
-```bash
-# Показати версію
+# Версія pytest
 pytest --version
 
-# Показати допомогу
+# Довідка по командам
 pytest --help
 
-# Показати встановлені плагіни
-pytest --version --verbose
+# Запуск тестів (поки що нічого не знайде — це нормально)
+pytest
+```
+
+Детальний запуск тестів (файл, папка, опції `-v`, `-s`, `-x`) розглянемо у Lesson 7.
+
+---
+
+### 3. Фіксація залежностей у requirements.txt
+
+Після встановлення зафіксуйте версії:
+
+```bash
+python -m pip freeze > requirements.txt
+```
+
+Результат — файл `requirements.txt`:
+
+```txt
+iniconfig==2.0.0
+packaging==24.0
+pluggy==1.5.0
+pytest==8.3.2
+```
+
+**Навіщо фіксувати версії?**
+
+- **Відтворюваність** — кожен, хто працює з проєктом, отримає ідентичне середовище
+- **Стабільність** — нова версія бібліотеки не зламає проєкт несподівано
+- **CI/CD** — серверні білди використовують `requirements.txt` для встановлення залежностей
+
+---
+
+### 4. Відтворення середовища
+
+Коли інший розробник клонує проєкт, він встановлює все одною командою:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Це стандартний production flow:
+
+```
+git clone <repo>
+python -m venv venv
+source venv/bin/activate
+python -m pip install -r requirements.txt
+pytest
 ```
 
 ---
 
-### 5. Базова команда pytest
+### 5. Корисні команди pip
 
 ```bash
-# Запустити всі тести в поточній директорії
-pytest
+# Встановити конкретну версію
+python -m pip install pytest==8.3.2
 
-# Запустити конкретний файл
-pytest tests/test_example.py
+# Оновити до останньої версії
+python -m pip install --upgrade pytest
 
-# Запустити з виводом print statements
-pytest -s
+# Подивитись встановлені пакети
+python -m pip list
 
-# Запустити з детальним виводом
-pytest -v
+# Подивитись інформацію про пакет
+python -m pip show pytest
 ```
+
+---
+
+## ⚠️ Типові проблеми
+
+| Проблема | Причина | Рішення |
+|----------|---------|---------|
+| `pytest: command not found` | venv не активований | `source venv/bin/activate` |
+| `ModuleNotFoundError: No module named 'pytest'` | pytest встановлено в інше середовище | Перевірте: `which python` та `python -m pip list` |
+| Стара версія pytest | Встановлено глобально, а не в venv | `python -m pip install --upgrade pytest` |
+| `pip` встановлює не туди | `pip` вказує на системний Python | Завжди використовуйте `python -m pip` |
 
 ---
 
@@ -143,3 +139,6 @@ pytest -v
 
 Див. `QUESTIONS.md`
 
+---
+
+**Далі:** `lesson-2-project-structure` — структура pytest проєкту

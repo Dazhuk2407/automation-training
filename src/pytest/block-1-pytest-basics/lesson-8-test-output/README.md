@@ -1,202 +1,194 @@
-# Lesson 8: Understanding Test Output
+# Lesson 8: Розуміння виводу pytest
 
 ## 🎯 Learning Outcomes
 
-- ✅ Читати вивід pytest
-- ✅ Розуміти pass/fail статуси
-- ✅ Аналізувати traceback
-- ✅ Інтерпретувати помилки
+Після цього уроку ви зможете:
+
+- ✅ Читати вивід pytest зверху вниз
+- ✅ Розрізняти PASSED, FAILED, ERROR, SKIPPED
+- ✅ Знаходити точний рядок падіння у traceback
+- ✅ Обирати правильний рівень деталізації для дебагу
+
+---
+
+## 📋 Передумови
+
+Ви вже знаєте:
+- Як запускати тести з CLI та основні опції (Lesson 7)
+- Як працює `assert` та `pytest.raises` (Lesson 6)
+- Структуру проєкту та naming (Lesson 2-4)
+
+Тепер навчимось **читати** те, що pytest показує після запуску.
 
 ---
 
 ## 📖 Теорія
 
-### 1. Базовий Вивід Pytest
+### 1. Статуси тестів
 
-```bash
-$ pytest -v
+| Символ | Статус | Що означає |
+|--------|--------|-----------|
+| `.` | PASSED | Тест успішний |
+| `F` | FAILED | `assert` не пройшов |
+| `E` | ERROR | Помилка під час виконання (до або замість assert) |
+| `s` | SKIPPED | Тест пропущено (`@pytest.mark.skip`) |
+| `x` | XFAIL | Очікуване падіння (`@pytest.mark.xfail`) |
+| `X` | XPASS | Очікували падіння, але тест пройшов |
 
-tests/test_example.py::test_addition PASSED      [33%]
-tests/test_example.py::test_subtraction PASSED   [66%]
-tests/test_example.py::test_division FAILED      [100%]
+**Різниця між FAILED та ERROR:**
 
-===================== FAILURES =====================
-___________ test_division ___________
-
-    def test_division():
-        result = 10 / 0
->       assert result == 5
-E       ZeroDivisionError: division by zero
-
-tests/test_example.py:5: ZeroDivisionError
-```
-
----
-
-### 2. Вивід Символів
-
-| Символ | Значення |
-|--------|----------|
-| `.` | PASSED |
-| `F` | FAILED |
-| `E` | ERROR |
-| `s` | SKIPPED |
-| `x` | XFAIL (expected fail) |
-| `X` | XPASS (unexpected pass) |
-
-**Приклад:**
-```
-tests/test_example.py .F..x    [100%]
-
-1 passed, 1 failed, 2 skipped, 1 xfailed in 0.25s
-```
-
----
-
-### 3. Типи Помилок
-
-#### AssertionError
+- **FAILED** — тест виконався, але перевірка `assert` не пройшла
+- **ERROR** — тест не зміг виконатися: помилка в коді до assert, у fixture або в setup
 
 ```python
-def test_assert():
-    x = 5
-    assert x == 10  # FAIL
+# FAILED — assert не пройшов
+def test_failed():
+    assert 5 == 10  # AssertionError
+
+# ERROR — код зламався до assert
+def test_error():
+    result = 10 / 0  # ZeroDivisionError — до assert навіть не дійшли
+    assert result == 5
 ```
 
-**Вивід:**
-```
-AssertionError: assert 5 == 10
+---
 
->       assert x == 10
+### 2. Як читати помилку в pytest — покроково
+
+Коли тест падає, pytest показує блок `FAILURES`. Читайте його зверху вниз:
+
+```
+tests/test_calculator.py::test_add FAILED                    [100%]
+
+========================= FAILURES ==========================
+_____________________ test_add ______________________________
+
+    def test_add():
+        result = add(2, 3)
+>       assert result == 10
 E       assert 5 == 10
+E        +  where 5 = add(2, 3)
 
-test_example.py:3: AssertionError
+tests/test_calculator.py:4: AssertionError
 ```
 
-#### ZeroDivisionError
+**Крок 1:** Назва тесту — `test_add`
 
-```python
-def test_division():
-    result = 10 / 0  # ERROR
+**Крок 2:** Статус — `FAILED` (assert не пройшов)
+
+**Крок 3:** Рядок з `>` — де саме впало: `assert result == 10`
+
+**Крок 4:** Рядок з `E` — причина: `assert 5 == 10` (отримали 5, очікували 10)
+
+**Крок 5:** Файл і рядок — `tests/test_calculator.py:4`
+
+Цього достатньо щоб зрозуміти що пішло не так і де виправляти.
+
+---
+
+### 3. Приклади різних помилок
+
+**AssertionError — assert не пройшов:**
+
+```
+>       assert user["name"] == "Bob"
+E       AssertionError: assert 'Alice' == 'Bob'
+
+tests/test_user.py:5: AssertionError
 ```
 
-**Вивід:**
-```
-ZeroDivisionError: division by zero
+Що бачимо: отримали `'Alice'`, очікували `'Bob'`.
 
+**ZeroDivisionError — помилка в коді:**
+
+```
 >       result = 10 / 0
 E       ZeroDivisionError: division by zero
 
-test_example.py:2: ZeroDivisionError
+tests/test_math.py:3: ZeroDivisionError
 ```
 
-#### ValueError
+Що бачимо: ділення на нуль у рядку 3. Це ERROR, а не FAILED — код зламався до assert.
+
+**KeyError — звертання до неіснуючого ключа:**
+
+```
+>       email = user["email"]
+E       KeyError: 'email'
+
+tests/test_user.py:4: KeyError
+```
+
+Що бачимо: ключа `'email'` немає в словнику. Також ERROR.
+
+---
+
+### 4. Інструменти для дебагу виводу
+
+Опції з Lesson 7, але тепер з точки зору **читання output**:
+
+| Ситуація | Опція | Що побачите |
+|----------|-------|------------|
+| Хочу побачити назву кожного тесту | `-v` | `test_add PASSED`, `test_sub FAILED` |
+| Хочу побачити print() у тестах | `-s` | Вивід print() перед результатом |
+| Traceback занадто довгий | `--tb=short` | Тільки рядок з помилкою |
+| Traceback заважає читати | `--tb=no` | Тільки статуси, без деталей |
+| Хочу бачити значення змінних | `-l` | Локальні змінні при падінні |
+| Хочу повний diff структур | `-vv` | Детальне порівняння dict/list |
+| Які тести найповільніші | `--durations=5` | Топ-5 за часом виконання |
+
+---
+
+### 5. Кілька assert в одному тесті — наслідки
 
 ```python
-def test_int_conversion():
-    x = int("not a number")  # ERROR
+def test_multiple():
+    assert 1 + 1 == 2      # ✅ виконається
+    assert 2 + 2 == 4      # ✅ виконається
+    assert 3 + 3 == 5      # ❌ впаде тут
+    assert 4 + 4 == 8      # ⛔ НЕ виконається
 ```
 
-**Вивід:**
-```
-ValueError: invalid literal for int() with base 10: 'not a number'
-
->       x = int("not a number")
-E       ValueError: invalid literal for int() with base 10: 'not a number'
-
-test_example.py:2: ValueError
-```
+Pytest зупиняє тест на **першому** падінні assert. Все, що після нього — не перевіряється. Тому 5 маленьких тестів краще за 1 великий: при падінні ви бачите що саме зламалось, а решта тестів продовжує працювати.
 
 ---
 
-### 4. Читання Traceback
+### 6. Підсумковий рядок
+
+Після всіх тестів pytest показує підсумок:
 
 ```
-tests/test_example.py::test_function FAILED
-
-_____________ test_function ____________
-
-    def test_function():
-        x = some_function()
->       assert x == 10
-E       assert 5 == 10
-
-tests/test_example.py:4: AssertionError
+=============== 5 passed, 2 failed, 1 error in 0.25s ===============
 ```
 
-**Розбір:**
-- `test_function` - назва тесту
-- Рядок коду з `>` - де сталась помилка
-- `E` - повідомлення помилки
-- `tests/test_example.py:4` - файл та рядок
+- `5 passed` — 5 тестів пройшли
+- `2 failed` — 2 тести з невдалим assert
+- `1 error` — 1 тест з помилкою в коді
+- `0.25s` — загальний час виконання
 
 ---
 
-### 5. Деталізація Помилок
+### 7. Exit codes
 
-```bash
-# Коротке трасування (за замовчуванням)
-pytest --tb=short
+| Код | Значення |
+|-----|---------|
+| 0 | Всі тести пройшли |
+| 1 | Є падіння (FAILED або ERROR) |
+| 2 | Виконання перервано (Ctrl+C) |
+| 5 | Тести не знайдені |
 
-# Довге трасування
-pytest --tb=long
-
-# Дуже детальне
-pytest --tb=long --showlocals
-
-# Без трасування
-pytest --tb=no
-```
+Exit code корисний у CI/CD: якщо `pytest` повернув не 0 — білд червоний.
 
 ---
 
-### 6. Опції для Більш Інформативного Виводу
+## ⚠️ Типові помилки при читанні output
 
-```bash
-# Показати локальні змінні
-pytest -l
-
-# Показати print() виводи
-pytest -s
-
-# Детальний вивід
-pytest -vv
-
-# Із часом кожного тесту
-pytest --durations=5
-```
-
----
-
-### 7. Статус Коди
-
-```bash
-# Exit codes:
-# 0 - all tests passed
-# 1 - tests failed
-# 2 - interrupted by user
-# 3 - internal error
-# 4 - pytest command line error
-# 5 - no tests found
-```
-
----
-
-### 8. Аналіз Помилок
-
-```python
-# ❌ ХОЧА БЬ один assert failed - тест falls
-def test_multiple_asserts():
-    assert 2 + 2 == 4      # ✅ PASS
-    assert 5 > 3           # ✅ PASS
-    assert "hello" == "world"  # ❌ FAIL - ТЕСТ ПАДАЄ ТУТ
-    assert True            # Цей assert НЕ виконається
-```
-
-**Результат:**
-```
-AssertionError: assert "hello" == "world"
-```
+| Помилка | Як правильно |
+|---------|-------------|
+| Плутати FAILED та ERROR | FAILED = assert впав; ERROR = код зламався |
+| Шукати проблему не в тому рядку | Дивіться рядок з `>`, а не з `E` |
+| Не помічати що assert зупинив тест | Код після failed assert не виконується |
+| Запускати без `-v` і гадати що впало | `-v` показує назву кожного тесту |
 
 ---
 
@@ -208,3 +200,10 @@ AssertionError: assert "hello" == "world"
 
 Див. папку `exercises/`
 
+## ❓ Питання
+
+Див. `QUESTIONS.md`
+
+---
+
+**Вітаємо! Ви завершили Block 1: Pytest Basics.**

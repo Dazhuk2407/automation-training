@@ -1,74 +1,99 @@
-# Exercises - Lesson 1: Install Pytest
+# Вправи — Lesson 1: Встановлення Pytest
 
-## Exercise 1: Install pytest (EASY)
+---
+
+## 🏋️ Вправа 1: Встановити pytest (EASY)
+
+**Завдання:** Встановіть pytest у своє віртуальне середовище та перевірте.
 
 ```bash
-# Create virtual environment
-python -m venv venv
+# 1. Переконайтесь що venv активований
+which python
 
-# Activate it
-source venv/bin/activate  # macOS/Linux
-# or
-venv\Scripts\activate  # Windows
+# 2. Встановіть pytest
+python -m pip install pytest
 
-# Install pytest
-pip install pytest
-
-# Verify installation
+# 3. Перевірте версію
 pytest --version
 ```
 
-**Expected output:**
+**Очікуваний результат:**
 ```
-pytest 7.x.x
+pytest 8.x.x
 ```
 
 ---
 
-## Exercise 2: Create requirements.txt (EASY)
+## 🏋️ Вправа 2: Зафіксувати залежності (EASY)
 
-Create `requirements.txt`:
-
-```txt
-pytest==7.4.3
-```
-
-Install from requirements:
+**Завдання:** Створіть `requirements.txt` з поточними залежностями.
 
 ```bash
-pip install -r requirements.txt
+# 1. Зафіксуйте залежності
+python -m pip freeze > requirements.txt
+
+# 2. Перевірте вміст файлу
+cat requirements.txt
 ```
+
+**Очікуваний результат:** файл `requirements.txt` містить pytest та його залежності з зафіксованими версіями.
 
 ---
 
-## Exercise 3: Check pytest help (MEDIUM)
+## 🏋️ Вправа 3: Встановити додатковий плагін (MEDIUM)
+
+**Завдання:** Встановіть `pytest-cov` (плагін для coverage) та оновіть `requirements.txt`.
 
 ```bash
-# View pytest help
-pytest --help
+# 1. Встановіть pytest-cov
+python -m pip install pytest-cov
 
-# Find answers:
-# 1. How to run only failed tests?
-# 2. How to run tests in parallel?
-# 3. How to show local variables in tracebacks?
+# 2. Перевірте що він з'явився
+python -m pip show pytest-cov
+
+# 3. Оновіть requirements.txt
+python -m pip freeze > requirements.txt
+
+# 4. Перевірте що pytest-cov є у файлі
+cat requirements.txt
 ```
 
 ---
 
-## Exercise 4: Verify pytest plugins (MEDIUM)
+## 🏋️ Вправа 4: Відтворити середовище з нуля (MEDIUM)
+
+**Завдання:** Перевірте що ваш `requirements.txt` дійсно працює — відтворіть середовище.
 
 ```bash
-# Check installed plugins
-pytest --version --verbose
+# 1. Деактивуйте поточне середовище
+deactivate
 
-# Install additional plugin
-pip install pytest-cov
+# 2. Видаліть venv
+rm -rf venv
 
-# Verify it's installed
-pytest --version --verbose
+# 3. Створіть заново
+python3 -m venv venv
+source venv/bin/activate
+
+# 4. Встановіть з requirements.txt
+python -m pip install -r requirements.txt
+
+# 5. Перевірте що все на місці
+pytest --version
+python -m pip list
 ```
+
+**Очікуваний результат:** pytest та pytest-cov встановлені з тими самими версіями, що й раніше.
+
+**Чому це важливо:** Це стандартний workflow в будь-якому проєкті. Якщо `requirements.txt` не відтворює середовище — це баг.
 
 ---
 
-**Ready for Lesson 2?** 🚀
+## ✅ Перевірка
 
+### Критерії:
+
+- [ ] pytest встановлений та `pytest --version` працює
+- [ ] `requirements.txt` створений і містить зафіксовані версії
+- [ ] pytest-cov встановлений
+- [ ] Середовище відтворюється з `requirements.txt`

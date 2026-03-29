@@ -1,17 +1,18 @@
 #!/bin/bash
-# Example: Check pytest installation
+# Перевірка встановлення pytest
+# Запуск: bash check_installation.sh
 
-echo "=== Checking Python version ==="
-python --version
-
-echo ""
-echo "=== Checking pytest version ==="
-pytest --version
+echo "=== Python ==="
+python --version 2>/dev/null || python3 --version
 
 echo ""
-echo "=== Checking pip list for pytest ==="
-pip list | grep pytest
+echo "=== Pytest ==="
+pytest --version 2>/dev/null || echo "pytest не встановлений!"
 
 echo ""
-echo "=== Pytest is ready! ==="
+echo "=== Встановлені пакети (pytest) ==="
+python -m pip list 2>/dev/null | grep -i pytest || echo "pytest не знайдено в pip list"
 
+echo ""
+echo "=== Шлях до Python ==="
+which python 2>/dev/null || which python3

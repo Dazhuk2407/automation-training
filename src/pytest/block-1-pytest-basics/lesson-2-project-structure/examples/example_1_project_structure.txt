@@ -1,0 +1,27 @@
+# Стандартна структура pytest проєкту
+#
+# Це шаблон — створіть таку структуру для свого проєкту.
+
+my_project/
+│
+├── src/                        # Код програми
+│   ├── __init__.py             # Робить папку Python-пакетом
+│   ├── calculator.py           # Модуль з бізнес-логікою
+│   └── utils.py                # Допоміжні функції
+│
+├── tests/                      # Тести
+│   ├── __init__.py             # Робить папку Python-пакетом
+│   ├── conftest.py             # Конфігурація pytest (автоматично підхоплюється)
+│   ├── test_calculator.py      # Тести для calculator.py
+│   └── test_utils.py           # Тести для utils.py
+│
+├── requirements.txt            # Залежності проєкту (pytest, pytest-cov, ...)
+├── pytest.ini                  # Налаштування pytest
+└── README.md                   # Опис проєкту
+
+
+# Правило іменування тестових файлів:
+#
+#   src/calculator.py    →  tests/test_calculator.py
+#   src/auth.py          →  tests/test_auth.py
+#   src/utils.py         →  tests/test_utils.py

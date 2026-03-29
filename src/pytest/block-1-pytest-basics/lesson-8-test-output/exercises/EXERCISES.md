@@ -1,113 +1,118 @@
-# Exercises - Lesson 8: Understanding Test Output
+# Вправи — Lesson 8: Розуміння виводу pytest
 
-## Exercise 1: Read Simple Output (EASY)
+Ці вправи — аналітичні. Ви запускаєте тести, читаєте вивід і даєте конкретні відповіді.
 
-```bash
-# Запустіть:
-pytest -v
-
-# Розберіть вивід:
-# ✅ PASSED - тест пройшов
-# ❌ FAILED - тест впав
-# ⏭️  SKIPPED - тест пропущено
-```
+**Файл для всіх вправ:** `test_output_practice.py`
 
 ---
 
-## Exercise 2: Analyze Failing Test (EASY)
-
-Створіть `test_fail.py`:
-
-```python
-def test_failing():
-    x = 5
-    assert x == 10, f"Expected 10 but got {x}"
-```
+## 🏋️ Вправа 1: Визначити статуси (EASY)
 
 Запустіть:
 ```bash
-pytest test_fail.py -v
+pytest test_output_practice.py -v
 ```
 
-**Аналізуйте:**
-- Рядок де тест впав
-- Повідомлення помилки
-- Назва тесту
+**Дайте відповіді:**
+1. Скільки тестів зі статусом PASSED?
+2. Скільки зі статусом FAILED?
+3. Скільки зі статусом ERROR?
+4. Скільки SKIPPED?
+5. Скільки XFAIL?
 
 ---
 
-## Exercise 3: Exception Tracebacks (MEDIUM)
+## 🏋️ Вправа 2: Прочитати traceback (EASY)
 
-```python
-def test_zero_division():
-    result = 10 / 0
+Подивіться на вивід тесту `test_failed_comparison`.
+
+**Дайте відповіді:**
+1. Яка назва тесту що впав?
+2. Який статус — FAILED чи ERROR?
+3. Який рядок позначений `>`?
+4. Що показує рядок з `E`?
+5. В якому файлі і на якому рядку помилка?
+
+---
+
+## 🏋️ Вправа 3: FAILED vs ERROR (MEDIUM)
+
+Порівняйте вивід `test_failed_comparison` та `test_error_zero_division`.
+
+**Дайте відповіді:**
+1. Чим відрізняється FAILED від ERROR?
+2. У `test_failed_comparison` — чи дійшов код до assert?
+3. У `test_error_zero_division` — чи дійшов код до assert?
+4. Яка помилка в кожному випадку? (AssertionError vs ZeroDivisionError)
+
+---
+
+## 🏋️ Вправа 4: Рівні traceback (MEDIUM)
+
+Запустіть той самий файл з різними `--tb`:
+
+```bash
+pytest test_output_practice.py --tb=short
+pytest test_output_practice.py --tb=no
+pytest test_output_practice.py --tb=long -l
 ```
+
+**Дайте відповіді:**
+1. Що показує `--tb=short` порівняно з дефолтом?
+2. Що залишається з `--tb=no`?
+3. Що додає `-l` (show locals)?
+4. Коли який варіант зручніший?
+
+---
+
+## 🏋️ Вправа 5: Multiple asserts (MEDIUM)
+
+Подивіться на вивід тесту `test_multiple_asserts`.
+
+**Дайте відповіді:**
+1. Який assert впав (який за рахунком)?
+2. Скільки assert виконалось до падіння?
+3. Чи виконався четвертий assert?
+4. Чому це проблема для діагностики?
+5. Як покращити цей тест? (підказка: розбити)
+
+---
+
+## 🏋️ Вправа 6: Dict diff (MEDIUM)
+
+Подивіться на вивід тесту `test_failed_dict` з опцією `-vv`:
+
+```bash
+pytest test_output_practice.py::test_failed_dict -vv
+```
+
+**Дайте відповіді:**
+1. Що показує pytest у diff?
+2. Яке поле відрізняється?
+3. Яке значення очікувалось і яке отримали?
+
+---
+
+## 🏋️ Вправа 7: Print та -s (EASY)
 
 Запустіть:
 ```bash
-pytest test_exception.py -v --tb=short
-pytest test_exception.py -v --tb=long
-pytest test_exception.py -v --tb=no
+pytest test_output_practice.py::test_with_print -v
+pytest test_output_practice.py::test_with_print -v -s
 ```
 
-**Порівняйте виводи!**
+**Дайте відповіді:**
+1. Чи видно print() без `-s`?
+2. Де саме з'являється вивід print() з `-s`?
 
 ---
 
-## Exercise 4: Print Output Analysis (MEDIUM)
+## ✅ Перевірка
 
-```python
-def test_with_prints():
-    print("Step 1")
-    x = 5
-    print(f"x = {x}")
-    print("Step 2")
-    assert x == 5
-```
+Ці вправи — ручні (аналіз виводу). Критерії:
 
-Запустіть:
-```bash
-pytest test_prints.py        # print не показується
-pytest test_prints.py -s     # print показується
-```
-
----
-
-## Exercise 5: Multiple Failures (HARD)
-
-```python
-def test_multiple_assertions():
-    assert 1 + 1 == 2
-    assert 2 + 2 == 4
-    assert 3 + 3 == 5  # Впаде тут
-    assert 4 + 4 == 8  # Цей НЕ виконається
-```
-
-**Запустіть та спостерігайте:**
-- Як많 assertions виконався до failure?
-- Які assertion впав?
-
----
-
-## Exercise 6: Detailed Error Analysis (HARD)
-
-```python
-def test_dict_error():
-    user = {"name": "Alice", "age": 25}
-    assert user["email"] == "alice@example.com"
-```
-
-Запустіть:
-```bash
-pytest test_dict.py -v --tb=long -l
-```
-
-**Аналізуйте:**
-- Тип помилки (KeyError)
-- Рядок коду
-- Локальні змінні
-
----
-
-**Run these exercises and understand the output!**
-
+- [ ] Ви вмієте визначити статус тесту (PASSED/FAILED/ERROR)
+- [ ] Ви вмієте знайти рядок падіння (`>`) та причину (`E`)
+- [ ] Ви розумієте різницю між FAILED та ERROR
+- [ ] Ви знаєте коли використовувати `--tb=short`, `-l`, `-s`
+- [ ] Ви розумієте чому multiple asserts — погана практика

@@ -1,140 +1,107 @@
-# Exercises - Lesson 5: Simple Tests
-
-## Exercise 1: Test Integer Operations (EASY)
-
-```python
-def test_basic_math():
-    """Тест базової математики."""
-    # TODO: Додайте assertions для:
-    # 1. 5 + 3 == 8
-    # 2. 10 - 4 == 6
-    # 3. 3 * 4 == 12
-    # 4. 10 / 2 == 5
-    assert ...
-```
+# Вправи — Lesson 5: Прості тести для базових типів
 
 ---
 
-## Exercise 2: Test String Operations (EASY)
+## 🏋️ Вправа 1: Тести для чисел (EASY)
 
-```python
-def test_strings():
-    """Тест операцій з рядками."""
-    name = "pytest"
-    
-    # TODO: Додайте assertions для:
-    # 1. Довжина = 6
-    # 2. Upper case = "PYTEST"
-    # 3. Містить "test"
-    # 4. Починається з "py"
-    assert ...
-```
+**Файл:** `exercise_1_numbers.py`
 
----
+Напишіть тести для базових операцій з числами.
 
-## Exercise 3: Test List Operations (MEDIUM)
-
-```python
-def test_list_operations():
-    """Тест операцій зі списками."""
-    numbers = [1, 2, 3, 4, 5]
-    
-    # TODO: Додайте assertions для:
-    # 1. Довжина = 5
-    # 2. Перший елемент = 1
-    # 3. Останній елемент = 5
-    # 4. 3 в списку
-    # 5. Слайс [1:3] = [2, 3]
-    assert ...
-```
+| Тест | Що перевірити |
+|------|--------------|
+| `test_addition` | 5 + 3 == 8 |
+| `test_subtraction` | 10 - 4 == 6 |
+| `test_multiplication` | 3 * 7 == 21 |
+| `test_integer_division` | 10 // 3 == 3 |
+| `test_modulo` | 10 % 3 == 1 |
+| `test_negative` | abs(-15) == 15 |
 
 ---
 
-## Exercise 4: Test Float with Precision (MEDIUM)
+## 🏋️ Вправа 2: Тести для рядків (EASY)
 
-```python
-import pytest
+**Файл:** `exercise_2_strings.py`
 
-def test_float_precision():
-    """Тест float з точністю."""
-    # TODO: Додайте тест для 0.1 + 0.2 ≈ 0.3
-    # Підказка: используйте pytest.approx()
-    result = 0.1 + 0.2
-    assert result == pytest.approx(0.3)
-```
+Напишіть тести для рядкових операцій.
 
----
-
-## Exercise 5: Test Dictionary (MEDIUM)
-
-```python
-def test_dictionary():
-    """Тест словника."""
-    user = {"name": "Alice", "age": 25, "email": "alice@example.com"}
-    
-    # TODO: Додайте assertions для:
-    # 1. name == "Alice"
-    # 2. age == 25
-    # 3. Словник має 3 ключі
-    # 4. "email" в словнику
-    # 5. "phone" НЕ в словнику
-    assert ...
-```
+| Тест | Що перевірити |
+|------|--------------|
+| `test_upper` | "hello".upper() == "HELLO" |
+| `test_lower` | "WORLD".lower() == "world" |
+| `test_contains` | "test" є підрядком "pytest" |
+| `test_not_contains` | "java" немає в "python" |
+| `test_starts_with` | "https://example.com" починається з "https://" |
+| `test_split` | "a,b,c".split(",") == ["a", "b", "c"] |
 
 ---
 
-## Exercise 6: Comprehensive Test (HARD)
+## 🏋️ Вправа 3: Тести для колекцій (MEDIUM)
 
-Створіть файл `test_comprehensive.py` з тестами для:
+**Файл:** `exercise_3_collections.py`
 
-```python
-def test_all_types():
-    """Комплексний тест всіх типів."""
-    # Integer
-    assert 10 + 5 == 15
-    
-    # String
-    assert "hello".upper() == "HELLO"
-    
-    # List
-    numbers = [1, 2, 3]
-    assert len(numbers) == 3
-    assert 2 in numbers
-    
-    # Dictionary
-    data = {"key": "value"}
-    assert data["key"] == "value"
-    
-    # Nested structures
-    matrix = [[1, 2], [3, 4]]
-    assert matrix[0][1] == 2
-    
-    # Set
-    unique = {1, 2, 3}
-    assert 2 in unique
-```
+Напишіть тести для списків та словників.
+
+**Списки:**
+
+| Тест | Що перевірити |
+|------|--------------|
+| `test_list_length` | len([1, 2, 3, 4, 5]) == 5 |
+| `test_list_first_last` | перший == 1, останній == 5 |
+| `test_list_membership` | "apple" є в ["apple", "banana"] |
+| `test_list_sorted` | sorted([3, 1, 2]) == [1, 2, 3] |
+
+**Словники:**
+
+| Тест | Що перевірити |
+|------|--------------|
+| `test_dict_access` | user["name"] == "Alice" |
+| `test_dict_key_exists` | "name" є ключем словника |
+| `test_dict_key_missing` | "phone" НЕ є ключем |
+| `test_dict_get_default` | user.get("phone") is None |
 
 ---
 
-## Exercise 7: Test Edge Cases (HARD)
+## 🏋️ Вправа 4: Порівняння float (MEDIUM)
 
-```python
-def test_edge_cases():
-    """Тест граничних випадків."""
-    # TODO: Тестуйте:
-    # 1. Порожній список: len([]) == 0
-    # 2. Отримання останнього елемента: [1,2,3][-1] == 3
-    # 3. Слайс з кроком: [1,2,3,4,5][::2] == [1,3,5]
-    # 4. Негативне число: abs(-10) == 10
-    # 5. Boolean порівняння
-    assert ...
-```
+**Файл:** `exercise_4_float.py`
+
+Напишіть тести з використанням `pytest.approx`.
+
+| Тест | Що перевірити |
+|------|--------------|
+| `test_float_sum` | 0.1 + 0.2 приблизно 0.3 |
+| `test_division` | 1 / 3 приблизно 0.333 (abs=0.001) |
+| `test_pi` | 22 / 7 приблизно 3.14 (abs=0.01) |
 
 ---
 
-**Run all exercises:**
+## 🏋️ Вправа 5: Edge cases (MEDIUM)
+
+**Файл:** `exercise_5_edge_cases.py`
+
+Напишіть окремий тест для кожного граничного випадку.
+
+| Тест | Що перевірити |
+|------|--------------|
+| `test_empty_list` | len([]) == 0 |
+| `test_empty_string` | len("") == 0 |
+| `test_empty_dict` | len({}) == 0 |
+| `test_empty_is_falsy` | not [] (порожній список — False) |
+| `test_set_removes_duplicates` | len({1, 1, 2, 2, 3}) == 3 |
+| `test_none_check` | None is None |
+
+---
+
+## ✅ Перевірка
+
 ```bash
-pytest -v
-# Expected: All tests should PASS ✅
+pytest test_exercises.py -v
 ```
 
+### Критерії:
+
+- [ ] Всі тести проходять
+- [ ] Кожен тест містить `assert`
+- [ ] Один тест — одна ідея (без "комбайнних" тестів)
+- [ ] Використано `pytest.approx` для float

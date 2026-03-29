@@ -1,155 +1,166 @@
-# Exercises - Lesson 4: Test Discovery
+# Вправи — Lesson 4: Test Discovery
 
-## Exercise 1: Correct Naming (EASY)
+---
 
-Визначте які з цих назв pytest знайде:
+## 🏋️ Вправа 1: Що знайде pytest? (EASY) — ручна демонстрація
+
+**Файл:** `exercise_1_what_pytest_finds.py`
+
+Це вправа на розуміння discovery. Вона **не перевіряється автоматично** через `test_exercises.py` — ви перевіряєте її самі.
+
+Подивіться на код у файлі та спрогнозуйте: які функції pytest знайде, а які — ні.
 
 ```python
-# A
-def test_addition():
-    pass
+def test_a():
+    assert True
 
-# B  
-def addition_test():
-    pass
+def a_test():
+    assert True
 
-# C
-def check_result():
-    pass
+def check():
+    assert True
 
-# D
-def test_check_result():
-    pass
+def test_b():
+    assert True
+
+def verify_test():
+    assert True
 ```
 
-**Відповідь:** pytest знайде A та D (починаються з `test_`)
+**Завдання:**
+1. Спочатку запишіть свій прогноз: скільки тестів знайде pytest?
+2. Запустіть: `pytest exercise_1_what_pytest_finds.py -v`
+3. Порівняйте результат з вашим прогнозом
+4. Заповніть блок `ВІДПОВІДЬ` у файлі
 
 ---
 
-## Exercise 2: Create Test Class (EASY)
+## 🏋️ Вправа 2: Створити тестовий файл (EASY)
 
-Створіть клас `TestCalculator` з 4 тестами:
-
-```python
-class TestCalculator:
-    """TODO: Додайте тести"""
-    
-    def test_add(self):
-        # TODO
-        pass
-    
-    def test_subtract(self):
-        # TODO
-        pass
-    
-    def test_multiply(self):
-        # TODO
-        pass
-    
-    def test_divide(self):
-        # TODO
-        pass
-```
-
-Запустіть: `pytest -v test_calculator.py`
-
----
-
-## Exercise 3: File Naming (MEDIUM)
-
-Створіть файли з правильними назвами:
-
-```bash
-# ✅ Створіть ці файли:
-touch test_math.py
-touch test_strings.py
-touch utils_test.py
-
-# ❌ НЕ створюйте:
-# math.py - неправильна назва
-# testmath.py - без підкреслення
-```
-
-Перевірте: `pytest --collect-only`
-
----
-
-## Exercise 4: Organize Tests (MEDIUM)
-
-Створіть структуру:
+**Завдання:** Створіть структуру і напишіть тести.
 
 ```
 my_project/
+├── src/
+│   ├── __init__.py
+│   └── math_utils.py
 └── tests/
-    ├── test_unit/
-    │   └── test_models.py
-    └── test_integration/
-        └── test_api.py
+    ├── __init__.py
+    └── test_math_utils.py
 ```
 
-Додайте по 2 тести в кожен файл.
+`src/math_utils.py`:
+```python
+def square(n):
+    """Піднести до квадрату."""
+    return n ** 2
 
-Запустіть:
+def is_positive(n):
+    """Перевірити чи число позитивне."""
+    return n > 0
+
+def absolute(n):
+    """Повернути абсолютне значення."""
+    return abs(n)
+```
+
+`tests/test_math_utils.py` — напишіть мінімум 3 тести (по одному на кожну функцію).
+
+Перевірте:
 ```bash
-pytest tests/test_unit/        # тільки unit тести
-pytest tests/test_integration/ # тільки integration тести
-pytest tests/                  # всі тести
+cd my_project
+pytest --collect-only
+pytest -v
 ```
 
 ---
 
-## Exercise 5: Mix Functions and Classes (HARD)
+## 🏋️ Вправа 3: Тестовий клас (EASY)
 
-У файлі `test_mixed.py` створіть:
+**Завдання:** Додайте в `tests/test_math_utils.py` клас `TestSquare` з тестами:
 
 ```python
-# 2 окремі тестові функції
-def test_function_one():
-    pass
-
-def test_function_two():
-    pass
-
-# 1 тестовий клас з 3 методами
-class TestGroup:
-    def test_method_one(self):
+class TestSquare:
+    def test_positive(self):
+        # TODO: замініть pass на: assert square(3) == 9
         pass
-    
-    def test_method_two(self):
+
+    def test_zero(self):
+        # TODO: замініть pass на: assert square(0) == 0
         pass
-    
-    def test_method_three(self):
+
+    def test_negative(self):
+        # TODO: замініть pass на: assert square(-4) == 16
         pass
 ```
 
-**Скільки тестів знайде pytest?**
-- Відповідь: 5 (2 функції + 3 методи)
+Перевірте через `pytest --collect-only` — мають бути і функції, і клас.
 
 ---
 
-## Exercise 6: Custom Test Collection (HARD)
+## 🏋️ Вправа 4: collect-only (MEDIUM)
 
-Створіть `pytest.ini`:
+**Завдання:** Запустіть `pytest --collect-only` з папки `my_project/` і дайте відповіді:
 
-```ini
-[pytest]
-python_files = test_*.py *_test.py check_*.py
-python_classes = Test* Check*
-python_functions = test_* check_*
-```
-
-Тепер pytest знайде також:
-- `check_calculator.py` ✅
-- `class CheckResults:` ✅
-- `def check_value():` ✅
-
-Протестуйте цю конфігурацію!
-
----
-
-**Run all exercises:**
 ```bash
-pytest -v --collect-only  # показати які тести знайдено
-pytest -v                 # запустити всі тести
+cd my_project
+pytest --collect-only
 ```
 
+1. Скільки тестів знайдено всього?
+2. Які файли pytest знайшов?
+3. Як відображаються тести з класу TestSquare порівняно з простими функціями?
+4. Як виглядає повний шлях тесту з класу? (наприклад `tests/test_math_utils.py::TestSquare::test_positive`)
+
+---
+
+## 🏋️ Вправа 5: Зламати discovery (MEDIUM) — ручна демонстрація
+
+**Завдання:** Створіть файл з **неправильною** назвою і переконайтесь що pytest його не бачить.
+
+Ця вправа — **ручна демонстрація через `pytest --collect-only`**. Автоматична перевірка (`test_exercises.py`) оцінює вже фінальний результат у Вправі 6.
+
+1. Створіть `tests/math_checks.py`:
+   ```python
+   def test_square_five():
+       assert 5 ** 2 == 25
+   ```
+
+2. Запустіть:
+   ```bash
+   pytest --collect-only
+   ```
+
+3. Переконайтесь: тест з `math_checks.py` **НЕ** з'явився у списку.
+
+**Чому?** Файл не відповідає патерну `test_*.py` і не відповідає `*_test.py`.
+
+---
+
+## 🏋️ Вправа 6: Виправити discovery (MEDIUM)
+
+**Завдання:** Виправте проблему з Вправи 5.
+
+1. Перейменуйте `tests/math_checks.py` → `tests/test_math_checks.py`
+2. Запустіть:
+   ```bash
+   pytest --collect-only
+   ```
+3. Переконайтесь: тепер pytest **бачить** новий тест.
+
+---
+
+## ✅ Перевірка
+
+```bash
+pytest test_exercises.py -v
+```
+
+### Критерії:
+
+- [ ] `my_project/tests/test_math_utils.py` існує
+- [ ] Є мінімум 3 тестові функції
+- [ ] Є клас `TestSquare` з мінімум 3 методами
+- [ ] Всі тести містять `assert`
+- [ ] `my_project/tests/test_math_checks.py` існує (виправлена назва)
+- [ ] Функції `square`, `is_positive`, `absolute` працюють коректно

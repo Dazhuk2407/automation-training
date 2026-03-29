@@ -1,131 +1,128 @@
-# Exercises - Lesson 7: Run Tests from CLI
+# Вправи — Lesson 7: Запуск тестів з CLI
 
-## Exercise 1: Basic Commands (EASY)
-
-Запустіть наступні команди:
-
-```bash
-# Базовий запуск
-pytest
-
-# Детальний вивід
-pytest -v
-
-# Мінімальний вивід
-pytest -q
-
-# Зі скріниотами
-pytest -s
-
-# Один файл
-pytest tests/test_example.py
-```
+Ці вправи — практичні. Ви виконуєте команди в терміналі та аналізуєте вивід.
 
 ---
 
-## Exercise 2: Filtering Tests (EASY)
+## 🏋️ Вправа 1: Базовий запуск (EASY)
+
+**Файл:** `test_for_cli.py` (вже створений)
+
+Запустіть тести різними способами і порівняйте вивід:
 
 ```bash
-# Тесты що містять "login" в назві
-pytest -k "login"
+# 1. Базовий запуск
+pytest test_for_cli.py
 
-# Тесты що НЕ містять "slow"
-pytest -k "not slow"
+# 2. Детальний вивід
+pytest test_for_cli.py -v
 
+# 3. Мінімальний вивід
+pytest test_for_cli.py -q
+
+# 4. З показом print()
+pytest test_for_cli.py -s
+```
+
+**Запитання до себе:**
+- Яка різниця між `-v` та `-q`?
+- Чи видно print() без `-s`?
+
+---
+
+## 🏋️ Вправа 2: Запуск конкретного тесту (EASY)
+
+Запустіть тільки один тест з файлу:
+
+```bash
 # Один конкретний тест
-pytest tests/test_auth.py::test_login -v
+pytest test_for_cli.py::test_addition -v
+
+# Тест з класу
+pytest test_for_cli.py::TestStrings::test_upper -v
 ```
+
+**Запитання до себе:**
+- Який формат шляху до тесту в класі?
 
 ---
 
-## Exercise 3: Stop on Failures (MEDIUM)
+## 🏋️ Вправа 3: Фільтрація через -k (MEDIUM)
 
 ```bash
-# Зупинити на першій помилці
-pytest -x
+# Тести, що містять "add" у назві
+pytest test_for_cli.py -k "add" -v
 
-# Зупинити після 3 помилок
-pytest --maxfail=3
+# Тести, що НЕ містять "slow"
+pytest test_for_cli.py -k "not slow" -v
 
-# Запустити спочатку failed тесты
-pytest --ff
+# Тести з "string" АБО "list"
+pytest test_for_cli.py -k "string or list" -v
 ```
+
+**Запитання до себе:**
+- Скільки тестів знайшов `-k "add"`?
+- Чи знаходить `-k` тести всередині класів?
 
 ---
 
-## Exercise 4: Mark Tests (MEDIUM)
-
-Создайте файл `test_marked.py`:
-
-```python
-import pytest
-
-@pytest.mark.slow
-def test_slow():
-    pass
-
-@pytest.mark.fast
-def test_fast():
-    pass
-
-@pytest.mark.unit
-def test_unit():
-    pass
-```
-
-Запустіть:
+## 🏋️ Вправа 4: Контроль помилок (MEDIUM)
 
 ```bash
-# Тільки slow
-pytest -m slow -v
+# Зупинитися на першому падінні
+pytest test_for_cli.py -x -v
 
-# Без slow
-pytest -m "not slow" -v
-
-# Unit та fast
-pytest -m "unit or fast" -v
+# Зупинитися після 2 падінь
+pytest test_for_cli.py --maxfail=2 -v
 ```
+
+Щоб побачити ефект, тимчасово розкоментуйте падаючий тест у `test_for_cli.py`.
 
 ---
 
-## Exercise 5: Verbosity Levels (HARD)
+## 🏋️ Вправа 5: Traceback та collect-only (MEDIUM)
 
 ```bash
-# Різні рівні деталізації:
-pytest                   # Normal
-pytest -v               # Verbose
-pytest -vv              # Very verbose
-pytest -q               # Quiet
+# Короткий traceback
+pytest test_for_cli.py --tb=short
 
-# З tracebacks:
-pytest --tb=short
-pytest --tb=long
-pytest --tb=no
+# Без traceback
+pytest test_for_cli.py --tb=no
+
+# Перевірити що pytest знайшов (без запуску)
+pytest test_for_cli.py --collect-only
 ```
+
+**Запитання до себе:**
+- Скільки тестів показав `--collect-only`?
+- Яка різниця між `--tb=short` та `--tb=no`?
 
 ---
 
-## Exercise 6: Create pytest.ini (HARD)
+## 🏋️ Вправа 6: Комбінування опцій (MEDIUM)
 
-Создайте `pytest.ini`:
-
-```ini
-[pytest]
-testpaths = tests
-addopts = -v --tb=short
-markers =
-    slow: slow test
-    unit: unit test
-    integration: integration test
-```
-
-Потім запустіть:
+Спробуйте комбінації:
 
 ```bash
-pytest  # Автоматично буде використовувати налаштування з pytest.ini
+# Verbose + зупинка на першому + короткий traceback
+pytest test_for_cli.py -v -x --tb=short
+
+# Фільтр + verbose + print
+pytest test_for_cli.py -k "string" -v -s
+
+# Quiet + collect-only
+pytest test_for_cli.py -q --collect-only
 ```
 
 ---
 
-**Practice these commands!**
+## ✅ Перевірка
 
+Ці вправи — ручні (CLI-практика). Критерії:
+
+- [ ] Ви запустили тести мінімум 10 різними способами
+- [ ] Розумієте різницю між `-v`, `-q`, `-s`
+- [ ] Вмієте запустити один конкретний тест
+- [ ] Вмієте фільтрувати через `-k`
+- [ ] Вмієте зупиняти на помилках через `-x`
+- [ ] Знаєте що робить `--collect-only`

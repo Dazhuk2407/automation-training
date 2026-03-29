@@ -1,184 +1,180 @@
-# Lesson 3: First Test File
+# Lesson 3: Перший тест у проєкті
 
 ## 🎯 Learning Outcomes
 
-- ✅ Створити перший тестовий файл
-- ✅ Розуміти структуру test файлу
-- ✅ Написати простий тест
-- ✅ Запустити перший тест
-- ✅ Зрозуміти pass/fail результати
+Після цього уроку ви зможете:
+
+- ✅ Створити код у `src/` та тест у `tests/`
+- ✅ Імпортувати функцію з `src/` у тестовий файл
+- ✅ Написати та запустити реальний тест
+- ✅ Зрозуміти вивід pytest у контексті проєкту
+
+---
+
+## 📋 Передумови
+
+Ви вже знаєте:
+- Що таке pytest, assert, pytest.raises (Lesson 0)
+- Як встановити pytest (Lesson 1)
+- Як виглядає структура проєкту (Lesson 2)
+
+Тепер ми **з'єднаємо все разом** і напишемо перший реальний тест.
 
 ---
 
 ## 📖 Теорія
 
-### 1. Структура Тестового Файлу
+### 1. Що ми будемо робити
 
-Тестовий файл в pytest має просту структуру:
+Повний цикл:
 
-```python
-# tests/test_basic.py
-
-def test_simple_addition():
-    """Тест додавання двох чисел."""
-    result = 2 + 2
-    assert result == 4
+```
+1. Створити функцію в src/calculator.py
+2. Створити тест у tests/test_calculator.py
+3. Імпортувати функцію у тест
+4. Написати assert
+5. Запустити pytest
+6. Побачити PASSED
 ```
 
-**Ключові моменти:**
-- Файл починається з `test_` або закінчується на `_test.py`
-- Функції тестів починаються з `test_`
-- Використовуємо `assert` для перевірок
+Це те, що ви робитимете щодня як QA Automation Engineer.
 
 ---
 
-### 2. Перший Простий Тест
+### 2. Крок 1 — Код у src/
+
+Створіть файл `src/calculator.py`:
 
 ```python
-# tests/test_calculator.py
-
-def test_addition():
-    """Тест що 2 + 2 = 4."""
-    assert 2 + 2 == 4
-
-def test_subtraction():
-    """Тест що 5 - 3 = 2."""
-    assert 5 - 3 == 2
-
-def test_multiplication():
-    """Тест що 3 * 4 = 12."""
-    assert 3 * 4 == 12
-```
-
----
-
-### 3. Запуск Першого Тесту
-
-```bash
-# Запустити всі тести
-pytest
-
-# Запустити конкретний файл
-pytest tests/test_calculator.py
-
-# Запустити з детальним виводом
-pytest -v tests/test_calculator.py
-```
-
-**Вивід:**
-```
-tests/test_calculator.py::test_addition PASSED      [33%]
-tests/test_calculator.py::test_subtraction PASSED   [66%]
-tests/test_calculator.py::test_multiplication PASSED [100%]
-
-===================== 3 passed in 0.02s =====================
-```
-
----
-
-### 4. Тест з Функцією
-
-```python
-# src/calculator.py
 def add(a, b):
     """Додати два числа."""
     return a + b
+
 
 def subtract(a, b):
     """Відняти b від a."""
     return a - b
 ```
 
+Це код, який ми будемо тестувати. У реальному проєкті цей код пише розробник, а ви — тести.
+
+---
+
+### 3. Крок 2 — Тест у tests/
+
+Створіть файл `tests/test_calculator.py`:
+
 ```python
-# tests/test_calculator.py
 from src.calculator import add, subtract
 
-def test_add_positive_numbers():
-    """Тест додавання позитивних чисел."""
-    result = add(3, 5)
-    assert result == 8
 
-def test_add_negative_numbers():
-    """Тест додавання негативних чисел."""
-    result = add(-3, -5)
-    assert result == -8
+def test_add():
+    """add(2, 3) повинна повернути 5."""
+    result = add(2, 3)
+    assert result == 5
+
 
 def test_subtract():
-    """Тест віднімання."""
+    """subtract(10, 4) повинна повернути 6."""
     result = subtract(10, 4)
     assert result == 6
 ```
 
----
-
-### 5. Що Робить Assert?
-
-`assert` перевіряє умову. Якщо умова `False` - тест fails:
-
-```python
-def test_example():
-    x = 10
-    assert x == 10    # ✅ PASS - умова True
-    assert x > 5      # ✅ PASS - умова True
-    assert x < 20     # ✅ PASS - умова True
-    # assert x == 20  # ❌ FAIL - умова False
-```
+**Зверніть увагу:**
+- Імпорт з `src.calculator` — ми тестуємо реальний модуль, а не копіюємо код у тест
+- Кожен тест — окрема функція з одним `assert`
+- Назви тестів описують **що перевіряється**
 
 ---
 
-### 6. Перший Failing Тест
+### 4. Крок 3 — Запуск
 
-```python
-def test_intentional_fail():
-    """Цей тест навмисно падає."""
-    result = 2 + 2
-    assert result == 5  # ❌ FAIL: assert 4 == 5
+З кореня проєкту:
+
+```bash
+pytest
 ```
 
-**Вивід:**
+Вивід:
+
 ```
-tests/test_example.py::test_intentional_fail FAILED [100%]
+tests/test_calculator.py::test_add PASSED       [50%]
+tests/test_calculator.py::test_subtract PASSED   [100%]
 
-===================== FAILURES =====================
-___________ test_intentional_fail ___________
-
-    def test_intentional_fail():
-        result = 2 + 2
->       assert result == 5
-E       assert 4 == 5
-
-tests/test_example.py:4: AssertionError
+===================== 2 passed in 0.01s =====================
 ```
+
+- `PASSED` — тест пройшов, функція працює правильно
+- `2 passed` — обидва тести успішні
+- `tests/test_calculator.py::test_add` — повний шлях до тесту
 
 ---
 
-### 7. Docstrings в Тестах
+### 5. Імпорт з src — як це працює
 
 ```python
-def test_example():
-    """
-    Опис тесту - що він перевіряє.
-    
-    Given: Вхідні дані
-    When: Що робимо
-    Then: Очікуваний результат
-    """
-    # Arrange
-    x = 10
-    
-    # Act
-    result = x * 2
-    
-    # Assert
-    assert result == 20
+from src.calculator import add, subtract
 ```
+
+Щоб цей імпорт працював, потрібно:
+1. `src/__init__.py` — існує (порожній файл)
+2. `tests/__init__.py` — існує (порожній файл)
+3. Запускати `pytest` з **кореня проєкту** (де лежить `src/`)
+
+Якщо імпорт не працює — перевірте ці три речі.
+
+---
+
+### 6. Структура тесту: Arrange → Act → Assert
+
+Кожен хороший тест складається з трьох частин:
+
+```python
+def test_add_positive():
+    # Arrange — підготовка даних
+    a = 3
+    b = 5
+
+    # Act — виконання дії
+    result = add(a, b)
+
+    # Assert — перевірка результату
+    assert result == 8
+```
+
+Для простих тестів це можна записати в один рядок:
+
+```python
+def test_add_positive():
+    assert add(3, 5) == 8
+```
+
+Обидва варіанти правильні. Використовуйте Arrange-Act-Assert коли тест складніший.
+
+---
+
+## ⚠️ Типові помилки
+
+| Помилка | Причина | Рішення |
+|---------|---------|---------|
+| `ModuleNotFoundError: No module named 'src'` | Немає `__init__.py` або запуск не з кореня | Створіть `src/__init__.py`, запускайте `pytest` з папки проєкту |
+| `ImportError` | Неправильний шлях імпорту | Перевірте: `from src.calculator import add` |
+| `0 items collected` | Тестовий файл не починається з `test_` | Перейменуйте файл: `test_calculator.py` |
 
 ---
 
 ## 💡 Приклади
 
-Див. папку `examples/`
+Див. папку `examples/` — готовий міні-проєкт з тестами.
 
 ## 🏋️ Вправи
 
 Див. папку `exercises/`
+
+## ❓ Питання
+
+Див. `QUESTIONS.md`
+
+---
+
+**Далі:** `lesson-4-test-discovery` — як pytest знаходить тести

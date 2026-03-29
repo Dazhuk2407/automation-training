@@ -1,208 +1,224 @@
-# Lesson 6: Assertions
+# Lesson 6: Assertions — глибше розуміння
 
 ## 🎯 Learning Outcomes
 
-- ✅ Розуміти різні типи assertions
-- ✅ Писати assert з повідомленнями
-- ✅ Використовувати складні перевірки
-- ✅ Знати best practices для assertions
+Після цього уроку ви зможете:
+
+- ✅ Використовувати різні типи assertions усвідомлено
+- ✅ Розуміти як pytest показує помилки (assert introspection)
+- ✅ Правильно перевіряти типи, винятки та float
+- ✅ Знати коли assert message потрібен, а коли — ні
+
+---
+
+## 📋 Передумови
+
+Ви вже знаєте:
+- Що таке `assert` та базові перевірки (Lesson 0, 5)
+- Як писати тести для різних типів даних (Lesson 5)
+
+Тепер ми розберемо assertions **глибше**: як вони працюють всередині pytest, коли додавати повідомлення, і як уникнути типових помилок.
 
 ---
 
 ## 📖 Теорія
 
-### 1. Базовий Assert
+### 1. Як pytest показує помилки (Assert Introspection)
+
+Pytest **перехоплює** `assert` і показує детальну інформацію про помилку:
 
 ```python
-# Простий assert
-assert True
-assert 5 > 3
-assert "test" in "pytest"
-
-# Assert з повідомленням
-assert 5 > 10, "5 має бути більше 10"
-assert "hello" == "world", f"Очікується 'world' але отримано 'hello'"
+def test_dict_comparison():
+    assert {"a": 1, "b": 2} == {"a": 1, "b": 3}
 ```
 
-**Результат при failure:**
+Вивід pytest:
+
 ```
-AssertionError: 5 має бути більше 10
+E       AssertionError: assert {'a': 1, 'b': 2} == {'a': 1, 'b': 3}
+E         Differing items:
+E         {'b': 2} != {'b': 3}
 ```
+
+Pytest сам покаже:
+- Які значення порівнювались
+- Що саме відрізняється
+- Повний diff для великих структур
+
+**Це головна суперсила pytest.** У unittest потрібно писати `self.assertEqual(a, b)` щоб отримати хороший diff. У pytest достатньо `assert a == b`.
 
 ---
 
-### 2. Comparison Assertions
+### 2. Boolean assertions — правильний стиль
 
 ```python
-# Рівність
-assert x == y
-assert x != y
+# ✅ Правильно (ідіоматичний Python)
+assert condition
+assert not condition
+assert value is None
+assert value is not None
 
-# Порядок
-assert x < y
-assert x > y
-assert x <= y
-assert x >= y
-
-# Boolean
+# ❌ Надмірно (не потрібно порівнювати з True/False)
 assert condition is True
 assert condition is False
-assert condition is None
+assert condition == True
 ```
+
+**Чому?** `assert condition` вже перевіряє truthiness. Порівняння з `True`/`False` через `is` або `==` — це зайвий код, який нічого не додає.
+
+Виняток: `assert value is None` — правильно, бо `None` — це конкретний об'єкт, і `is` тут семантично точніший за `==`.
 
 ---
 
-### 3. Membership Assertions
+### 3. Перевірка типів
 
 ```python
-# Належність
-assert element in collection
-assert element not in collection
-
-# Приклади
-assert "a" in "abc"
-assert 5 in [1, 2, 3, 4, 5]
-assert "key" in {"key": "value"}
-assert "missing" not in ["a", "b", "c"]
-```
-
----
-
-### 4. Type Assertions
-
-```python
-# Перевірка типу
+# ✅ Рекомендовано — isinstance
 assert isinstance(x, int)
-assert isinstance(x, str)
 assert isinstance(x, (int, float))  # один з кількох типів
-assert type(x) == int
 
-# Приклади
-assert isinstance([1, 2, 3], list)
-assert isinstance("hello", str)
-assert isinstance(3.14, (int, float))
+# ⚠️ Менш гнучкий — type()
+assert type(x) == int
 ```
+
+**Чому `isinstance` краще за `type()`?**
+
+`isinstance` враховує наслідування:
+
+```python
+class PositiveInt(int):
+    pass
+
+x = PositiveInt(5)
+assert isinstance(x, int)   # ✅ True — PositiveInt наслідує int
+assert type(x) == int        # ❌ False — type це PositiveInt, не int
+```
+
+У реальних проєктах наслідування — звичайна річ. `isinstance` працює коректно в усіх випадках.
 
 ---
 
-### 5. Exception Assertions
+### 4. Assert messages — коли потрібні, а коли ні
+
+**Pytest вже показує хороший diff.** Тому message потрібен не завжди.
+
+```python
+# Без message — pytest сам покаже "assert 5 == 10"
+def test_without_message():
+    result = calculate(2, 3)
+    assert result == 5
+
+# З message — додатковий контекст для складної логіки
+def test_with_message():
+    user = get_user(42)
+    assert user is not None, "User with ID=42 should exist in test database"
+```
+
+**Коли додавати message:**
+- Складна бізнес-логіка, де причина падіння неочевидна
+- Перевірка передумов (preconditions)
+- Тест з циклом або динамічними даними
+
+**Коли НЕ потрібен:**
+- Прості порівняння (`assert result == 5`) — pytest покаже diff
+- Очевидні перевірки (`assert len(items) == 3`)
+
+---
+
+### 5. Assertions для винятків
 
 ```python
 import pytest
 
-# Тестування винятків
 def test_division_by_zero():
+    """Базова перевірка винятку."""
     with pytest.raises(ZeroDivisionError):
         result = 10 / 0
 
-def test_value_error():
-    with pytest.raises(ValueError):
-        int("not a number")
-
-# З перевіркою повідомлення
 def test_error_message():
+    """Перевірка тексту помилки через match (regex)."""
     with pytest.raises(ValueError, match="invalid literal"):
         int("abc")
 ```
 
 ---
 
-### 6. List/Dict Assertions
+### 6. Float assertions — pytest.approx
 
 ```python
-# Списки
-assert [1, 2, 3] == [1, 2, 3]
-assert [1, 2, 3] != [3, 2, 1]
-assert 2 in [1, 2, 3]
+import pytest
 
-# Словники
-assert {"a": 1} == {"a": 1}
-assert {"a": 1} != {"a": 2}
-assert "a" in {"a": 1}
+# ❌ Може впасти через float precision
+assert 0.1 + 0.2 == 0.3
 
-# Вкладені структури
-assert {"x": [1, 2]} == {"x": [1, 2]}
-assert matrix[0][1] == 2
+# ✅ pytest.approx — стандартний спосіб
+assert 0.1 + 0.2 == pytest.approx(0.3)
+assert 22 / 7 == pytest.approx(3.14, abs=0.01)
 ```
 
 ---
 
-### 7. Assert Messages
+### 7. Зведена таблиця assertions
 
-```python
-def test_with_message():
-    x = 5
-    y = 10
-    assert x > y, f"Expected {x} > {y}"
-    # Error: AssertionError: Expected 5 > 10
-
-def test_descriptive_message():
-    age = 15
-    assert age >= 18, (
-        f"User age {age} is below minimum required age 18"
-    )
-```
+| Що перевіряємо | Assert | Приклад |
+|---------------|--------|---------|
+| Рівність | `==` | `assert result == 5` |
+| Нерівність | `!=` | `assert result != 0` |
+| Порівняння | `<` `>` `<=` `>=` | `assert age >= 18` |
+| Truthiness | `assert x` / `assert not x` | `assert is_valid` |
+| None | `is None` / `is not None` | `assert value is not None` |
+| Належність | `in` / `not in` | `assert "a" in text` |
+| Тип | `isinstance()` | `assert isinstance(x, int)` |
+| Виняток | `pytest.raises()` | `with pytest.raises(ValueError):` |
+| Float | `pytest.approx()` | `assert x == pytest.approx(3.14)` |
 
 ---
 
-### 8. Multiple Assertions
+## ⚠️ Типові помилки
+
+### Порівняння з True/False через `is`
 
 ```python
-def test_user_validation():
-    user = {"name": "Alice", "age": 25}
-    
-    # Кілька перевірок
-    assert user["name"] == "Alice"
-    assert user["age"] == 25
-    assert len(user) == 2
-    
-    # ⚠️ Якщо перший assert fails - інші не виконаються!
-    # Для всіх перевірок краще використовувати окремі тести
+# ❌
+assert result is True
+# ✅
+assert result
 ```
 
----
-
-### 9. Best Practices
+### Type через `type()` замість `isinstance`
 
 ```python
-# ✅ ДОБРЕ
-def test_calculation():
-    result = 2 + 2
-    assert result == 4, f"Expected 4 but got {result}"
-
-# ❌ ПОГАНО
-def test_many_asserts():
-    """Не робіть 10+ assertions в одному тесті"""
-    # ...
-    assert x == 1
-    assert y == 2
-    assert z == 3
-    # ...
-
-# ✅ ДОБРЕ - один assert за одну речь яка тестується
-def test_addition():
-    assert 2 + 2 == 4
-
-def test_subtraction():
-    assert 5 - 3 == 2
+# ❌ Не враховує наслідування
+assert type(x) == int
+# ✅
+assert isinstance(x, int)
 ```
 
----
+### Зайві message у простих перевірках
 
-### 10. Assert Operators Summary
+```python
+# ❌ Pytest і так покаже "assert 5 == 10"
+assert result == 5, f"Expected 5 but got {result}"
+# ✅ Достатньо
+assert result == 5
+```
 
-| Оператор | Опис | Приклад |
-|----------|------|---------|
-| `==` | Рівність | `assert x == 5` |
-| `!=` | Нерівність | `assert x != 5` |
-| `<` | Менше | `assert x < 10` |
-| `>` | Більше | `assert x > 0` |
-| `<=` | Менше або рівно | `assert x <= 10` |
-| `>=` | Більше або рівно | `assert x >= 0` |
-| `in` | Містить | `assert "a" in "abc"` |
-| `not in` | Не містить | `assert "x" not in "abc"` |
-| `is` | Ідентичність | `assert x is True` |
-| `is not` | Не ідентичність | `assert x is not None` |
+### "Комбайн" — один тест на все
+
+```python
+# ❌ Якщо впаде на рядку 3, рядки 4-5 не виконаються
+def test_everything():
+    assert func_a() == 1
+    assert func_b() == 2
+    assert func_c() == 3
+
+# ✅ Окремі тести — окрема діагностика
+def test_func_a():
+    assert func_a() == 1
+
+def test_func_b():
+    assert func_b() == 2
+```
 
 ---
 
@@ -214,3 +230,10 @@ def test_subtraction():
 
 Див. папку `exercises/`
 
+## ❓ Питання
+
+Див. `QUESTIONS.md`
+
+---
+
+**Далі:** `lesson-7-run-tests` — запуск тестів з командного рядка

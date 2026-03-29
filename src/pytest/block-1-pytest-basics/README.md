@@ -2,7 +2,13 @@
 
 Основи тестування з pytest для автоматизації QA.
 
-## 📚 Уроки (Week 1-2)
+## 📚 Уроки (9 занять)
+
+### Lesson 0: Знайомство з Pytest
+📁 Папка: `lesson-0-pytest-intro`
+- Що таке pytest і навіщо він потрібен
+- Перший тест, assert, pytest.raises
+- **Час: 20-40 хв** (вступний урок)
 
 ### Lesson 1: Install Pytest
 📁 Папка: `lesson-1-install-pytest`
@@ -54,43 +60,44 @@
 
 ## 🚀 Як почати
 
-1. Почніть з `lesson-1-install-pytest`
+1. Почніть з `lesson-0-pytest-intro` (вступний урок)
 2. Прочитайте README в папці уроку
 3. Вивчіть файли в `examples/`
 4. Виконайте вправи в `exercises/`
 5. Відповідайте на питання в `QUESTIONS.md`
-6. Запустіть тести: `pytest exercises/`
+6. Запустіть тести: `pytest exercises/test_exercises.py -v`
 
 ## ⏰ Рекомендований час
 
-- Всього: ~20-25 годин
-- На урок: 2.5-3 години в середньому
+- Всього: ~22-28 годин
 - Рекомендовано: Тижні 1-2
 
 ### Детальний розподіл:
 
-| Урок | Назва | Час |
-|------|-------|-----|
-| 1 | Install Pytest | 1-2 год |
-| 2 | Project Structure | 2-3 год |
-| 3 | First Test | 2-3 год |
-| 4 | Test Discovery | 2-3 год |
-| 5 | Simple Tests | 3-4 год |
-| 6 | Assertions | 3-4 год |
-| 7 | Run Tests CLI | 2-3 год |
-| 8 | Test Output | 2-3 год |
+| Урок | Назва                | Час       |
+|------|----------------------|-----------|
+| 0    | Знайомство з Pytest  | 20-40 хв  |
+| 1    | Install Pytest       | 1-2 год   |
+| 2    | Project Structure    | 2-3 год   |
+| 3    | First Test           | 2-3 год   |
+| 4    | Test Discovery       | 2-3 год   |
+| 5    | Simple Tests         | 3-4 год   |
+| 6    | Assertions           | 3-4 год   |
+| 7    | Run Tests CLI        | 2-3 год   |
+| 8    | Test Output          | 2-3 год   |
 
 ## 📊 Прогрес
 
 ```
-[ ] Lesson 1: Install Pytest - lesson-1-install-pytest
-[ ] Lesson 2: Project Structure - lesson-2-project-structure
-[ ] Lesson 3: First Test - lesson-3-first-test
-[ ] Lesson 4: Test Discovery - lesson-4-test-discovery
-[ ] Lesson 5: Simple Tests - lesson-5-simple-tests
-[ ] Lesson 6: Assertions - lesson-6-assertions
-[ ] Lesson 7: Run Tests CLI - lesson-7-run-tests
-[ ] Lesson 8: Test Output - lesson-8-test-output
+[ ] Lesson 0: Знайомство з Pytest — lesson-0-pytest-intro
+[ ] Lesson 1: Install Pytest — lesson-1-install-pytest
+[ ] Lesson 2: Project Structure — lesson-2-project-structure
+[ ] Lesson 3: First Test — lesson-3-first-test
+[ ] Lesson 4: Test Discovery — lesson-4-test-discovery
+[ ] Lesson 5: Simple Tests — lesson-5-simple-tests
+[ ] Lesson 6: Assertions — lesson-6-assertions
+[ ] Lesson 7: Run Tests CLI — lesson-7-run-tests
+[ ] Lesson 8: Test Output — lesson-8-test-output
 ```
 
 ## 📖 Що ви вивчите
@@ -114,8 +121,3 @@
 ```bash
 pip install pytest
 ```
-
----
-
-**Готові почати? Переходьте до Lesson 1!** 🚀
-

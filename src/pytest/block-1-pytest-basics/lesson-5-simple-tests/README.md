@@ -1,227 +1,244 @@
-# Lesson 5: Simple Tests
+# Lesson 5: Прості тести для базових типів
 
 ## 🎯 Learning Outcomes
 
-- ✅ Писати тести для чисел (integers, floats)
-- ✅ Писати тести для рядків (strings)
-- ✅ Писати тести для списків (lists)
-- ✅ Використовувати різні patterns assertions
-- ✅ Розуміти типи перевірок
+Після цього уроку ви зможете:
+
+- ✅ Писати тести для чисел (int, float)
+- ✅ Писати тести для рядків
+- ✅ Писати тести для колекцій (list, dict, set, tuple)
+- ✅ Правильно порівнювати float через `pytest.approx`
+- ✅ Тестувати edge cases окремими тестами
+
+---
+
+## 📋 Передумови
+
+Ви вже знаєте:
+- Як створити проєкт з `src/` та `tests/` (Lesson 2-3)
+- Як pytest знаходить тести (Lesson 4)
+- Що таке `assert` та як читати вивід pytest (Lesson 0)
+
+Тепер ми навчимось писати тести для різних типів даних Python.
 
 ---
 
 ## 📖 Теорія
 
-### 1. Testing Numbers
+### 1. Тестування чисел
 
-#### Integers (Цілі числа)
+#### Цілі числа (int)
 
 ```python
-def test_integers():
-    """Тести для цілих чисел."""
-    # Рівність
-    assert 10 == 10
-    assert 2 + 2 == 4
-    
-    # Порівняння
-    assert 5 < 10
-    assert 15 > 10
-    assert 10 <= 10
+def test_add():
+    assert 2 + 3 == 5
+
+def test_comparison():
+    assert 10 > 5
     assert 10 >= 10
-    
-    # Нерівність
-    assert 5 != 10
-
-
-def test_integer_operations():
-    """Тести математичних операцій."""
-    assert 10 + 5 == 15
-    assert 10 - 3 == 7
-    assert 4 * 5 == 20
-    assert 10 / 2 == 5
-    assert 10 // 3 == 3  # ціле ділення
-    assert 10 % 3 == 1   # остача
+    assert 3 != 7
 ```
 
-#### Floats (Дробові числа)
+#### Дробові числа (float) — обережно!
 
 ```python
-def test_floats():
-    """Тести для float чисел."""
-    # ⚠️ ПРОБЛЕМА: float precision
-    # assert 0.1 + 0.2 == 0.3  # ❌ FAIL!
-    
-    # ✅ ПРАВИЛЬНО: використовувати tolerance
-    result = 0.1 + 0.2
-    expected = 0.3
-    assert abs(result - expected) < 0.0001
-    
-    # Або pytest.approx
-    import pytest
+import pytest
+
+# ❌ НЕБЕЗПЕЧНО — float precision
+# assert 0.1 + 0.2 == 0.3  # FAIL! 0.30000000000000004 != 0.3
+
+# ✅ ПРАВИЛЬНО — pytest.approx
+def test_float_sum():
     assert 0.1 + 0.2 == pytest.approx(0.3)
+
+def test_pi():
+    assert 22 / 7 == pytest.approx(3.14, abs=0.01)
 ```
+
+`pytest.approx` — стандартний спосіб порівнювати float у pytest.
 
 ---
 
-### 2. Testing Strings
+### 2. Тестування рядків
 
 ```python
-def test_string_equality():
-    """Тест рівності рядків."""
-    name = "pytest"
-    assert name == "pytest"
-    assert name != "Pytest"  # case sensitive
+def test_equality():
+    assert "hello" == "hello"
+    assert "Hello" != "hello"  # регістр має значення
 
-
-def test_string_methods():
-    """Тест методів рядків."""
-    text = "Hello World"
-    
-    assert text.upper() == "HELLO WORLD"
-    assert text.lower() == "hello world"
-    assert text.capitalize() == "Hello world"
-    assert text.title() == "Hello World"
-
-
-def test_string_contains():
-    """Тест перевірки вмісту."""
+def test_contains():
     text = "pytest testing framework"
-    
     assert "pytest" in text
-    assert "test" in text
     assert "Java" not in text
 
-
-def test_string_startswith_endswith():
-    """Тест початку та кінця рядка."""
+def test_starts_ends():
     url = "https://example.com"
-    
     assert url.startswith("https://")
     assert url.endswith(".com")
-    assert not url.startswith("http://")
 
-
-def test_string_length():
-    """Тест довжини рядка."""
-    password = "MyPassword123"
-    
-    assert len(password) >= 8  # мінімум 8 символів
-    assert len(password) <= 20  # максимум 20 символів
+def test_methods():
+    assert "hello".upper() == "HELLO"
+    assert "  spaces  ".strip() == "spaces"
+    assert "a,b,c".split(",") == ["a", "b", "c"]
 ```
 
 ---
 
-### 3. Testing Lists
+### 3. Тестування списків
 
 ```python
-def test_list_basics():
-    """Базові тести списків."""
+def test_basics():
     numbers = [1, 2, 3, 4, 5]
-    
     assert len(numbers) == 5
     assert numbers[0] == 1
     assert numbers[-1] == 5
-    assert numbers[1:3] == [2, 3]
 
-
-def test_list_membership():
-    """Тест належності елементів."""
+def test_membership():
     fruits = ["apple", "banana", "cherry"]
-    
     assert "apple" in fruits
-    assert "banana" in fruits
     assert "orange" not in fruits
 
-
-def test_list_operations():
-    """Тест операцій зі списками."""
-    numbers = [1, 2, 3]
-    
-    # Додавання
-    numbers.append(4)
-    assert numbers == [1, 2, 3, 4]
-    
-    # Видалення
-    numbers.remove(2)
-    assert numbers == [1, 3, 4]
-    
-    # Довжина
-    assert len(numbers) == 3
-
-
-def test_list_sorting():
-    """Тест сортування."""
-    numbers = [3, 1, 4, 1, 5, 9, 2, 6]
-    
-    sorted_asc = sorted(numbers)
-    assert sorted_asc == [1, 1, 2, 3, 4, 5, 6, 9]
-    
-    sorted_desc = sorted(numbers, reverse=True)
-    assert sorted_desc == [9, 6, 5, 4, 3, 2, 1, 1]
-
-
-def test_empty_list():
-    """Тест порожнього списку."""
-    empty = []
-    
-    assert len(empty) == 0
-    assert not empty  # порожній список = False
-    assert empty == []
+def test_sorting():
+    assert sorted([3, 1, 2]) == [1, 2, 3]
+    assert sorted([3, 1, 2], reverse=True) == [3, 2, 1]
 ```
 
 ---
 
-### 4. Testing Dictionaries
+### 4. Тестування словників
 
 ```python
-def test_dict_basics():
-    """Базові тести словників."""
+def test_access():
     user = {"name": "Alice", "age": 25}
-    
     assert user["name"] == "Alice"
-    assert user["age"] == 25
-    assert len(user) == 2
+    assert user.get("phone") is None  # безпечний доступ
 
-
-def test_dict_keys():
-    """Тест ключів словника."""
+def test_keys():
     config = {"debug": True, "port": 8080}
-    
     assert "debug" in config
     assert "host" not in config
-    assert list(config.keys()) == ["debug", "port"]
-
-
-def test_dict_values():
-    """Тест значень словника."""
-    scores = {"Alice": 95, "Bob": 87, "Charlie": 92}
-    
-    assert scores["Alice"] > 90
-    assert max(scores.values()) == 95
-    assert min(scores.values()) == 87
 ```
 
 ---
 
-### 5. Testing Tuples and Sets
+### 5. Тестування множин та кортежів
 
 ```python
-def test_tuples():
-    """Тест кортежів."""
-    coords = (10, 20)
-    
-    assert len(coords) == 2
-    assert coords[0] == 10
-    assert coords[1] == 20
+def test_set_removes_duplicates():
+    unique = {1, 2, 3, 3, 4, 4}
+    assert len(unique) == 4
+    assert 3 in unique
 
+def test_tuple():
+    point = (10, 20)
+    assert point[0] == 10
+    assert len(point) == 2
+```
 
-def test_sets():
-    """Тест множин."""
-    unique_numbers = {1, 2, 3, 3, 4, 4, 5}
-    
-    assert len(unique_numbers) == 5  # дублікати видалені
-    assert 3 in unique_numbers
-    assert 6 not in unique_numbers
+---
+
+### 6. Принцип: один тест — одна ідея
+
+```python
+# ❌ ПОГАНО — один тест перевіряє все
+def test_everything():
+    assert 2 + 2 == 4
+    assert "hello".upper() == "HELLO"
+    assert len([1, 2, 3]) == 3
+    assert {"a": 1}["a"] == 1
+
+# ✅ ДОБРЕ — окремі тести для окремих речей
+def test_addition():
+    assert 2 + 2 == 4
+
+def test_upper():
+    assert "hello".upper() == "HELLO"
+
+def test_list_length():
+    assert len([1, 2, 3]) == 3
+```
+
+**Чому це важливо:**
+- Якщо `test_everything` впаде на рядку 3, ви не дізнаєтесь чи рядки 4+ працюють
+- 5 простих тестів краще дебажити ніж 1 великий
+- У виводі pytest видно яка саме перевірка впала
+
+---
+
+## ⚠️ Типові помилки
+
+### Float через `==`
+
+```python
+# ❌ Може впасти
+assert 0.1 + 0.2 == 0.3
+
+# ✅ Використовуйте pytest.approx
+assert 0.1 + 0.2 == pytest.approx(0.3)
+```
+
+### Занадто багато assert в одному тесті
+
+```python
+# ❌ Якщо assert #2 впаде, #3-#5 не виконаються
+def test_all():
+    assert func_a()  # 1
+    assert func_b()  # 2 ← впав тут
+    assert func_c()  # 3 ← не виконається
+```
+
+### Мутація списку між перевірками
+
+```python
+# ❌ Список змінився — наступні assert неочевидні
+def test_list():
+    items = [1, 2, 3]
+    items.append(4)
+    assert len(items) == 4
+    items.remove(2)          # тепер [1, 3, 4]
+    assert items[1] == 3     # чому 3, а не 2?
+
+# ✅ Краще окремо
+def test_append():
+    items = [1, 2, 3]
+    items.append(4)
+    assert items == [1, 2, 3, 4]
+
+def test_remove():
+    items = [1, 2, 3]
+    items.remove(2)
+    assert items == [1, 3]
+```
+
+### Очікування порядку в set
+
+```python
+# ❌ set не гарантує порядок
+assert list({3, 1, 2}) == [1, 2, 3]  # може впасти!
+
+# ✅ Порівнюйте множини з множинами
+assert {3, 1, 2} == {1, 2, 3}
+```
+
+### `in` для рядка vs `in` для колекції
+
+```python
+# "in" для рядка — шукає підрядок
+assert "test" in "pytest"      # True (підрядок)
+
+# "in" для списку — шукає точний елемент
+assert "test" in ["pytest"]    # False! "test" != "pytest"
+assert "pytest" in ["pytest"]  # True
+```
+
+### Сортування змішаних типів
+
+```python
+# ❌ Python 3 не сортує змішані типи
+# sorted([1, "a", 2])  # TypeError!
+
+# ✅ Сортуйте лише однотипні дані
+assert sorted([3, 1, 2]) == [1, 2, 3]
 ```
 
 ---
@@ -234,3 +251,10 @@ def test_sets():
 
 Див. папку `exercises/`
 
+## ❓ Питання
+
+Див. `QUESTIONS.md`
+
+---
+
+**Далі:** `lesson-6-assertions` — детальніше про assertions
