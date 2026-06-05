@@ -45,7 +45,7 @@ def test_web_tables_add_new_user_row_appears(web_tables_page):
         #page.pause()
         # TODO: assert що у таблиці .rt-tbody є email
         # Підказка: assert email in page.locator(".rt-tbody").text_content()
-        assert page.locator("td", has_text=email).last.is_visible()
+        assert web_tables_page.page.locator("td", has_text=email).last.is_visible()
 
         # TODO: assert що у таблиці .rt-tbody є first_name
-        assert page.locator("td", has_text=first_name1).first.is_visible()
+        assert web_tables_page.page.locator("td", has_text=first_name1).first.is_visible()
