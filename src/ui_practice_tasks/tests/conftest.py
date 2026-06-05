@@ -9,7 +9,7 @@ from ui_practice_tasks.page_objects.child_pages import WebTablesPages
 BASE_URL = "https://demoqa.com"
 
 @pytest.fixture
-def web_page():
+def page():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
@@ -28,6 +28,7 @@ def go_home(page):
 @pytest.fixture()
 def web_tables_page(go_home):
     home_page = HomePage(go_home)
+    page.pause()
     home_page.click_on_elements_link()
     home_page.extend_list(PageElements.LINK_ELEMENTS.value)
     home_page.click_on_elements_list(PageElements.LIST_WEB_TABLES.value)
