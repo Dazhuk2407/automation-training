@@ -13,7 +13,7 @@ from ui_practice_tasks.page_objects.child_pages import WebTablesPages
 URL = "https://demoqa.com/webtables"
 
 
-def test_web_tables_add_new_user_row_appears(page, go_to_web_tables):
+def test_web_tables_add_new_user_row_appears(web_tables_page):
 
 
           
@@ -30,8 +30,8 @@ def test_web_tables_add_new_user_row_appears(page, go_to_web_tables):
         
         # ===== Act =====
         # Відкрити модалку додавання запису:
-        go_to_web_tables()
-        web_tables_page = WebTablesPages(page)
+    
+
         
         web_tables_page.click_add_registration_form_button()
         web_tables_page.fill_reg_form(first_name=first_name1, last_name=last_name, email=email, age=age, salary=salary, department=department)

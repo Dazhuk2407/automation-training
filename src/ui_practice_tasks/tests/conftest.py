@@ -4,6 +4,7 @@ from playwright.sync_api import sync_playwright
 import pytest
 
 from ui_practice_tasks.page_objects.home_page import HomePage, PageElements
+from ui_practice_tasks.page_objects.child_pages import WebTablesPages
 
 BASE_URL = "https://demoqa.com"
 
@@ -19,14 +20,15 @@ def web_page():
 @pytest.fixture()
 def go_home(page):
     page.goto(BASE_URL)
-    return page
+    return HomePage(page)
     #expect(page).to_have_url(BASE_URL)
 
 
 
 @pytest.fixture()
-def go_to_web_tables(go_home):
+def web_tables_page(go_home):
     home_page = HomePage(go_home)
     home_page.click_on_elements_link()
     home_page.extend_list(PageElements.LINK_ELEMENTS.value)
     home_page.click_on_elements_list(PageElements.LIST_WEB_TABLES.value)
+    return WebTablesPages(go_home.page)
