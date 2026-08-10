@@ -1,33 +1,29 @@
-"""
-Task 03 — Radio Button
-URL: https://demoqa.com/radio-button
-"""
-
-from playwright.sync_api import sync_playwright
-from ui_practice_tasks.POM_Pattern import LocatorsTask3
-from ui_practice_tasks.POM_Pattern import CommonActions
+from playwright.sync_api import Page
 
 
+class RadioButtonPages:
+    def __init__(self, page: Page):
+        self._page = page
 
-URL = "https://demoqa.com/radio-button"
+        self.locator_text_success = page.locator(".text-success")
+        self.locator_yes_radio = page.locator("#yesRadio")
+        self.locator_no_radio = page.locator("#noRadio")
 
 
-def test_radio_button_selects_yes_and_no_is_disabled():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        page = browser.new_page()
+    def click_by_yes_radio(self):
+         self._page.get_by_text("Yes", exact=True).click()
+         self.locator_text_success.wait_for(state="visible")
 
-        locators_task3 = LocatorsTask3(page)
-        common_actions = CommonActions(page)
-        
-        # ===== Arrange =====
-        common_actions.open_url(URL)
-        #page.goto(URL)
-
-        # ===== Act =====
-        # Інпут радіо прихований за label, тому клікаємо по тексту:
-        #page.get_by_text("Yes", exact=True).click()
-        common_actions.action_click_by_text("Yes")
+    def is_yes_radio_checked(self):
+        return self.locator_yes_radio.is_checked()  
+    
+    def is_no_radio_disabled(self):
+        return self.locator_no_radio.is_disabled()  
+    
+    def has_text_success_yes(self):
+        return "Yes" in self.locator_text_success.text_content()
+    
+    
 
         # ===== Assert =====
         # Дочекатися появи тексту результату:
@@ -47,4 +43,3 @@ def test_radio_button_selects_yes_and_no_is_disabled():
         # Підказка: метод .is_disabled()
         assert common_actions.input_verification_is_checked(locators_task3.locator_no_radio) == False
 
-        browser.close()

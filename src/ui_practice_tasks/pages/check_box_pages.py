@@ -1,29 +1,30 @@
-"""
-Task 02 — Check Box
-URL: https://demoqa.com/checkbox
-"""
-
-from playwright.sync_api import sync_playwright
-from playwright.sync_api import expect
-import logging 
+from playwright.sync_api import Page
 
 
+class CheckBoxPages:
+    def __init__(self, page: Page):
+        self._page = page
 
-URL = "https://demoqa.com/checkbox"
-log = logging.getLogger("test_checkbox_selection_shows_result")
+        self.locator_extend_tree= page.locator('.rc-tree-switcher')
+        self.locator_result= page.locator("#result")
 
-def test_checkbox_selection_shows_result():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        page = browser.new_page()
+    def expand_tree(self):
+        self.locator_extend_tree.click()
 
-        # ===== Arrange =====
-        page.goto(URL)
-        log.info("Page loaded")
-        
-        #page.pause()
+    def click_desktop_checkbox(self):
+        self._page.get_by_label("Select Desktop").check()
+
+    def is_result_visible(self):
+        return self.locator_result.is_visible()
+
+    def has_desktop_in_result(self):
+        return "desktop" in self.locator_result.text_content()  
     
-        # ===== Act =====
+    def is_desktop_checkbox_checked(self):
+        return self._page.locator('span.rc-tree-checkbox[aria-label="Select Desktop"]').is_checked()
+
+
+ # ===== Act =====
         # Розгорнути все дерево одним кліком:
         page.locator('.rc-tree-switcher').click()
         #page.locator('button[title="Expand all"]').click()
@@ -51,5 +52,3 @@ def test_checkbox_selection_shows_result():
         # TODO: assert що інпут #tree-node-desktop у стані checked
         # Підказка: метод .is_checked()
         assert page.locator('span.rc-tree-checkbox[aria-label="Select Desktop"]').is_checked()
-        
-        browser.close()
